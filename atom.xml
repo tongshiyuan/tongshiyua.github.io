@@ -5,9 +5,9 @@
   
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://yoursite.com/"/>
+  <link href="http://tongshiyuan.github.io/"/>
   <updated>2019-06-14T04:57:30.941Z</updated>
-  <id>http://yoursite.com/</id>
+  <id>http://tongshiyuan.github.io/</id>
   
   <author>
     <name>John Doe</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>Hexo-NexT主题配置</title>
-    <link href="http://yoursite.com/2019/06/14/hello/"/>
-    <id>http://yoursite.com/2019/06/14/hello/</id>
+    <link href="http://tongshiyuan.github.io/2019/06/14/hello/"/>
+    <id>http://tongshiyuan.github.io/2019/06/14/hello/</id>
     <published>2019-06-14T04:57:08.000Z</published>
     <updated>2019-06-14T04:57:30.941Z</updated>
     
@@ -35,19 +35,19 @@
     
     </summary>
     
-      <category term="Hexo" scheme="http://yoursite.com/categories/Hexo/"/>
+      <category term="Hexo" scheme="http://tongshiyuan.github.io/categories/Hexo/"/>
     
     
-      <category term="Hexo" scheme="http://yoursite.com/tags/Hexo/"/>
+      <category term="Hexo" scheme="http://tongshiyuan.github.io/tags/Hexo/"/>
     
-      <category term="NexT" scheme="http://yoursite.com/tags/NexT/"/>
+      <category term="NexT" scheme="http://tongshiyuan.github.io/tags/NexT/"/>
     
   </entry>
   
   <entry>
     <title>Hello World</title>
-    <link href="http://yoursite.com/2019/06/13/hello-world/"/>
-    <id>http://yoursite.com/2019/06/13/hello-world/</id>
+    <link href="http://tongshiyuan.github.io/2019/06/13/hello-world/"/>
+    <id>http://tongshiyuan.github.io/2019/06/13/hello-world/</id>
     <published>2019-06-13T13:05:13.635Z</published>
     <updated>2019-06-13T13:05:13.635Z</updated>
     

@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://tongshiyuan.github.io/"/>
-  <updated>2019-06-14T04:57:30.941Z</updated>
+  <updated>2019-06-17T14:09:37.926Z</updated>
   <id>http://tongshiyuan.github.io/</id>
   
   <author>
@@ -17,79 +17,25 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Hexo-NexT主题配置</title>
-    <link href="http://tongshiyuan.github.io/2019/06/14/hello/"/>
-    <id>http://tongshiyuan.github.io/2019/06/14/hello/</id>
-    <published>2019-06-14T04:57:08.000Z</published>
-    <updated>2019-06-14T04:57:30.941Z</updated>
+    <title>我搭了一个自己的主页</title>
+    <link href="http://tongshiyuan.github.io/2019/06/17/%E6%88%91%E6%90%AD%E4%BA%86%E4%B8%80%E4%B8%AA%E8%87%AA%E5%B7%B1%E7%9A%84%E4%B8%BB%E9%A1%B5/"/>
+    <id>http://tongshiyuan.github.io/2019/06/17/我搭了一个自己的主页/</id>
+    <published>2019-06-17T13:39:58.000Z</published>
+    <updated>2019-06-17T14:09:37.926Z</updated>
     
-    <content type="html"><![CDATA[<p>这是我的生信笔记！</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;这是我的生信笔记！&lt;/p&gt;
-
-      
-    
-    </summary>
-    
-      <category term="Hexo" scheme="http://tongshiyuan.github.io/categories/Hexo/"/>
-    
-    
-      <category term="Hexo" scheme="http://tongshiyuan.github.io/tags/Hexo/"/>
-    
-      <category term="NexT" scheme="http://tongshiyuan.github.io/tags/NexT/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hello World</title>
-    <link href="http://tongshiyuan.github.io/2019/06/13/hello-world/"/>
-    <id>http://tongshiyuan.github.io/2019/06/13/hello-world/</id>
-    <published>2019-06-13T13:05:13.635Z</published>
-    <updated>2019-06-13T13:05:13.635Z</updated>
-    
-    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>]]></content>
+    <content type="html"><![CDATA[<ul><li>2019年6月17日，天气还是挺热的，我在废了几小时搭建完这个hexo主页以后，决定开始把我的简书文章搬过来了<br></li><li>其实我从来没有写这种东西的习惯，在一个朋友的建议下，我开始写，想把我学到的做过的东西记下来，一方面方便以后自己查阅，一方面，如果能帮助到其他人也是好的，毕竟我在学习之初，还是很痛苦的。<br></li><li>我本身是比较懒的一个人，所以我一开始选择简书，一个直接往上写东西就行的平台，毕竟对我来说，搭建一个主页好累啊，但是简书实在太过分了，莫名其面锁了我的文章，在我申诉以后还不搭理我，这我就很气了，我的系列文章，你中间给我锁一篇算怎么回事！！！<br></li><li>三次申诉无果后，我打算自己建立一个主页，毕竟写技术文章这种是我个人觉得是纯粹找diss的，因为我的技术也就那样，所以装乎我是不会去，而这个主页有个好处是，我没开通评论模块（实在是太麻烦了），这样大家也diss不了我了，但是如果我的文章出现错误，大家完全可以邮件联系我(<a href="mailto:shiyuant@outlook.com" target="_blank" rel="noopener">shiyuant@outlook.com</a>)，我会第一时间答复并且修改<br></li><li>希望能和大家多多交流，共同学习进步<br></li></ul>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.
+        &lt;ul&gt;
+&lt;li&gt;2019年6月17日，天气还是挺热的，我在废了几小时搭建完这个hexo主页以后，决定开始把我的简书文章搬过来了&lt;br&gt;&lt;/li&gt;
+&lt;li&gt;其实我从来没有写这种东西的习惯，在一个朋友的建议下，我开始写，想把我学到的做过的东西记下来，一方面方便以后自己查阅，一方面，
       
     
     </summary>
     
-    
-  </entry>
-  
-  <entry>
-    <title>test</title>
-    <link href="http://tongshiyuan.github.io/2019/01/20/test/"/>
-    <id>http://tongshiyuan.github.io/2019/01/20/test/</id>
-    <published>2019-01-20T12:41:08.000Z</published>
-    <updated>2019-06-14T05:37:07.586Z</updated>
-    
-    <content type="html"><![CDATA[<p> this is a test !</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt; this is a test !&lt;/p&gt;
-
-      
-    
-    </summary>
-    
-      <category term="Hexo" scheme="http://tongshiyuan.github.io/categories/Hexo/"/>
-    
-    
-      <category term="Hexo" scheme="http://tongshiyuan.github.io/tags/Hexo/"/>
-    
-      <category term="NexT" scheme="http://tongshiyuan.github.io/tags/NexT/"/>
     
   </entry>
   

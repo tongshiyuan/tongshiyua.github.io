@@ -115,7 +115,7 @@
 <meta property="og:image" content="http://tongshiyuan.github.io/2019/06/18/WGS分析笔记（4）-%20Call%20SNVs%20indels/MAPQ%E5%88%86%E5%B8%83.png">
 <meta property="og:image" content="http://tongshiyuan.github.io/2019/06/18/WGS分析笔记（4）-%20Call%20SNVs%20indels/MAPQ%E7%B4%AF%E7%A7%AF%E5%88%86%E5%B8%83%E6%9B%B2%E7%BA%BF.png">
 <meta property="og:image" content="http://tongshiyuan.github.io/2019/06/18/WGS分析笔记（4）-%20Call%20SNVs%20indels/vcf.png">
-<meta property="og:updated_time" content="2019-06-18T05:35:01.712Z">
+<meta property="og:updated_time" content="2019-06-18T05:42:33.169Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="WGS分析笔记（4）- Call SNVs&#x2F;indels">
 <meta name="twitter:description" content="最近一直忙期末汇报和脚本编写，没来的及接着往下写文章，年前把这一块写了，然后再往下的分析流程就比较特异性了，做一步写一步那种，相对于这种已经常规化的流程（除了一些细节上的差异，别的都是大同小异的了），再往下的可能就不是很常规的分析手段了，不同的实验室有不同的分析方法，希望能够有大佬提点意见，多多交流。  “突变”区别&amp;emsp;&amp;emsp;对于WGS的数据，在处理完bam文件以后，就是call v">
@@ -427,7 +427,7 @@
                 
               
 
-              <time title="创建时间：2019-06-18 12:51:38 / 修改时间：13:35:01" itemprop="dateCreated datePublished" datetime="2019-06-18T12:51:38+08:00">2019-06-18</time>
+              <time title="创建时间：2019-06-18 12:51:38 / 修改时间：13:42:33" itemprop="dateCreated datePublished" datetime="2019-06-18T12:51:38+08:00">2019-06-18</time>
             
 
             
@@ -496,7 +496,7 @@
 <h3 id="“突变”区别"><a href="#“突变”区别" class="headerlink" title="“突变”区别"></a>“突变”区别</h3><p>&emsp;&emsp;对于WGS的数据，在处理完bam文件以后，就是call variations了，之后所有的工作其实都是针对variations进行分析，那么说到变异呢，其实中文的“变异”在英文里对应多个单词，经常看到傻傻分不清，这里稍微区别一下。<br><br>&emsp;&emsp;<em>mutation：核苷酸序列的永久性改变（来源于ACMG），在人群中小于1%或5%（来源于北大生物信息学公开课）<br></em><br>&emsp;&emsp;<em>polymorphism：在人群中频率超过1%（来源于ACMG），或超过5%（来源于北大生物信息学公开课）<br></em><br>&emsp;&emsp;<em>variation/variant：以上两个的总和（来源于北大生物信息学公开课）</em><br></p>
 <h3 id="变异类型"><a href="#变异类型" class="headerlink" title="变异类型"></a>变异类型</h3><p>&emsp;&emsp;我们一般所说的variations主要有四大类：SNV，INDEL，SV，CNV。(有些call变异软件也会支持MNV的calling，但是我们很少考虑这一类变异)<br><br>&emsp;&emsp;&emsp;&emsp;SNV即单核苷酸位点变异（single nucleotide variants）<br><br>&emsp;&emsp;&emsp;&emsp;INDEL即小片段插入缺失（insertion and deletion）<br><br>&emsp;&emsp;&emsp;&emsp;SV即结构变异（structural variation）<br><br>&emsp;&emsp;&emsp;&emsp;CNV即拷贝数变异（copy number variation）<br></p>
 <h3 id="SNV与SNP"><a href="#SNV与SNP" class="headerlink" title="SNV与SNP"></a>SNV与SNP</h3><p>&emsp;&emsp;说到SNV，可能大家也经常看到SNP（single nucleotide polymorphism），同样是混淆使用，这俩其实还是有一些区别的，看到上面对变异的区分，其实也能看出这俩的区别来：<br><br>&emsp;&emsp;一般SNP是二态的，SNV没有这样的限制，如果在一个物种中该单碱基变异的频率达到一定水平（1%）就叫SNP，而频率未知（比如仅仅在一个个体中发现）就叫SNV，SNV包含SNP。<br></p>
-<h3 id="变异简述"><a href="#变异简述" class="headerlink" title="变异简述"></a>变异简述</h3><p>&emsp;&emsp;人基因组通常有4.1<del>5.0M的变异，但是99.9%都是由SNV和short indel造成。<br><br>&emsp;&emsp;通常，一个人全基因组内会有约 3.6</del>4.4 M 个 SNVs，绝大数（大于 95%）的高频（群体中等位基因频率大于 5%）的 SNP 在 dbSNP中有记录，高频的SNP一般都不是致病的主要突变位点。<br><br>&emsp;&emsp;通常，一个人全基因组内会有约 600K 的 Indel（&lt;50bp的插入缺失为small indel）。<br><br>&emsp;&emsp;编码区或剪接位点处发生的插入缺失都可能会改变蛋白的翻译。<br></p>
+<h3 id="变异简述"><a href="#变异简述" class="headerlink" title="变异简述"></a>变异简述</h3><p>&emsp;&emsp;人基因组通常有4.1 - 5.0M的变异，但是99.9%都是由SNV和short indel造成。<br><br>&emsp;&emsp;通常，一个人全基因组内会有约 3.6 - 4.4 M 个 SNVs，绝大数（大于 95%）的高频（群体中等位基因频率大于 5%）的 SNP 在 dbSNP中有记录，高频的SNP一般都不是致病的主要突变位点。<br><br>&emsp;&emsp;通常，一个人全基因组内会有约 600K 的 Indel（&lt;50bp的插入缺失为small indel）。<br><br>&emsp;&emsp;编码区或剪接位点处发生的插入缺失都可能会改变蛋白的翻译。<br></p>
 <h4 id="SV"><a href="#SV" class="headerlink" title="SV"></a>SV</h4><p>&emsp;&emsp;结构变异指的是在基因组上一些大的结构性的变异，比如大片段丢失（deletion）、大片段插入（insertion）、大片段重复（duplication）、拷贝数变异（copy number variants）、倒位（inversion）、易位（translocation）。一般来说，结构变异涉及的序列长度在1kb到3Mb之间。结构变异普遍存在于人类基因组中，是个人差异和一些疾病易感性的来源。结构变异还可能导致融合基因的发生，一些癌症已经证实和结构变异导致的基因融合事件有关。<br></p>
 <h4 id="CNV"><a href="#CNV" class="headerlink" title="CNV"></a>CNV</h4><p>&emsp;&emsp;拷贝数变异指的是基因组上大片段序列拷贝数的增加或者减少，可分为缺失（deletion）和重复(duplication)两种类型，是一种重要的分子机制。CNV能够导致孟德尔遗传病与罕见疾病, 同时与包括癌症在内的复杂疾病相关，因此对于染色体水平的缺失、扩增的研究已经成为疾病研究热点。<br></p>
 <p>以上数据在不同的数据库或文献上可能有所差异，但相去不远，具体的变异分类以及分布就不详述，可参考一些文献，下面说说怎么进行其中的SNV和indel的检测。<br></p>

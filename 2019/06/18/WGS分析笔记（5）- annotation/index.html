@@ -111,18 +111,18 @@
 <meta property="og:site_name" content="Taro">
 <meta property="og:description" content="&amp;emsp;&amp;emsp; 在找到很多变异以后（本文具体指的是snv以及indel），我们需要做的就是进行注释了，这是因为无论WGS还是WES，都会call出大量的变异。即使是一个正常人，也会有百万数量级的变异（详见上一章），而我们需要做的是把其中可能有害的变异找出来。因此对于这么多的变异，就需要通过注释信息来筛选了（不同于call snv/indel以后的筛选，那是依据变异本身的可信度进行筛选的）">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11351859-ef734788f48a68f7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11351859-3c73cb918e6f36c4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11351859-4f060a17282443ca.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11351859-67718505617129e8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11351859-0a9d67a4679a28a0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11351859-7ea3dce9fa5a8d27.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/11351859-0fd8c45c4d71bc24.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2019-06-18T05:39:58.461Z">
+<meta property="og:image" content="http://tongshiyuan.github.io/2019/06/18/WGS分析笔记（5）-%20annotation/1.png">
+<meta property="og:image" content="http://tongshiyuan.github.io/2019/06/18/WGS分析笔记（5）-%20annotation/2.png">
+<meta property="og:image" content="http://tongshiyuan.github.io/2019/06/18/WGS分析笔记（5）-%20annotation/3.png">
+<meta property="og:image" content="http://tongshiyuan.github.io/2019/06/18/WGS分析笔记（5）-%20annotation/4.png">
+<meta property="og:image" content="http://tongshiyuan.github.io/2019/06/18/WGS分析笔记（5）-%20annotation/5.png">
+<meta property="og:image" content="http://tongshiyuan.github.io/2019/06/18/WGS分析笔记（5）-%20annotation/6.png">
+<meta property="og:image" content="http://tongshiyuan.github.io/2019/06/18/WGS分析笔记（5）-%20annotation/7.png">
+<meta property="og:updated_time" content="2019-06-18T05:45:05.259Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="WGS分析笔记（5）- annotation">
 <meta name="twitter:description" content="&amp;emsp;&amp;emsp; 在找到很多变异以后（本文具体指的是snv以及indel），我们需要做的就是进行注释了，这是因为无论WGS还是WES，都会call出大量的变异。即使是一个正常人，也会有百万数量级的变异（详见上一章），而我们需要做的是把其中可能有害的变异找出来。因此对于这么多的变异，就需要通过注释信息来筛选了（不同于call snv/indel以后的筛选，那是依据变异本身的可信度进行筛选的）">
-<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/11351859-ef734788f48a68f7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:image" content="http://tongshiyuan.github.io/2019/06/18/WGS分析笔记（5）-%20annotation/1.png">
 
 
 
@@ -430,7 +430,7 @@
                 
               
 
-              <time title="创建时间：2019-06-18 12:52:03 / 修改时间：13:39:58" itemprop="dateCreated datePublished" datetime="2019-06-18T12:52:03+08:00">2019-06-18</time>
+              <time title="创建时间：2019-06-18 12:52:03 / 修改时间：13:45:05" itemprop="dateCreated datePublished" datetime="2019-06-18T12:52:03+08:00">2019-06-18</time>
             
 
             
@@ -518,16 +518,23 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ grep -v &quot;##&quot; out.avinput | cut -f1-9 --complement &gt; gt.txt</span><br><span class="line">$ paste hg19_multianno.txt gt.txt &gt; merge.anno.txt</span><br></pre></td></tr></table></figure>
 
 <p>&emsp;&emsp;很简单的两行命令，第一行提取了avinput文件里的genotype信息，然后第二行merge这个信息到注释完的文件上。这样得到的结果呢，又有注释信息，又有genotype信息，就很方便进行trio分析。<br><br>&emsp;&emsp;到这里其实就差不多了，可以进行下一步的筛选了，但是实际情况中，我们用到的数据库可能不止annovar提供的这些。毕竟annovar提供的数据库都是公开的数据库，而且对于日新月异的预测数据库等，annovar作者也不能做到每一种都去收录，如果你有一些自己下载的数据库，你该怎么利用annovar去注释呢？<br><br>&emsp;&emsp;这一类的数据库很多，比如omim需要申请才能下载，HGMD专业版需要付费订阅，这些annovar都是没有提供的。但是这些数据库在孟德尔遗传疾病中是很具有参考价值的，由于这两个都不能直接下载获得，这里也不详述，以两个近期发表在Nature Genetic上的公开的预测数据库为例，简述一下简单的方法构建自己的数据库。<br><br>&emsp;&emsp;annovar注释变异有两种注释方式，一个是基于区域，一个是基于位点，<a href="https://www.nature.com/articles/s41588-018-0294-6" target="_blank" rel="noopener">CCRS</a>就是一个基于区域的有害性预测打分工具，其数据可在这里下载，分为<a href="https://s3.us-east-2.amazonaws.com/ccrs/ccrs/ccrs.autosomes.v2.20180420.bed.gz" target="_blank" rel="noopener">常染色体</a>和<a href="https://s3.us-east-2.amazonaws.com/ccrs/ccrs/ccrs.xchrom.v2.20180420.bed.gz" target="_blank" rel="noopener">X染色体</a>；<a href="https://www.nature.com/articles/s41588-019-0348-4" target="_blank" rel="noopener">S-CAP</a>就是一个基于位点的splicing 区域有害性预测工具，其数据可以在<a href="http://bejerano.stanford.edu/scap/" target="_blank" rel="noopener">这里</a>下载。<br></p>
-<h5 id="CCRS"><a href="#CCRS" class="headerlink" title="CCRS"></a>CCRS</h5><p>&emsp;&emsp;由于是基于区域的，那么在<code>-operation</code>参数里面呢是<code>r</code>，然后呢从网上下载下来的是一个bed文件，截取前十行，长这样。<br><img src="https://upload-images.jianshu.io/upload_images/11351859-ef734788f48a68f7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="ccrs"></p>
-<p>&emsp;&emsp;这些信息其实我们只需要ccr_pct这一列的打分，为了方便起见，完全可以只保留前四列的内容，不然注释完会把所有前三列以后的内容都加到注释结果文件里。<br><br>&emsp;&emsp;那么这么一个文件是不能直接拿来用的，第一步就是改名。下载过annovar提供的数据库后可以知道，annovar使用的数据库都有自己的命名方式，这里的话直接改成 <code>hg19_ccrs.txt</code>即可，<code>hg19</code>表示所使用的参考基因组版本，因为CCRS 的坐标是基于hg19的，所以这里是hg19，ccrs就是<code>-protocol</code>参数里的标识符了，然后以<code>.txt</code>作为后缀。<br><br>&emsp;&emsp;然后是修改格式，一开始我用的方法是参考annovar提供的<code>region-based</code>数据库的格式，然后修改CCRS的格式。后来我发现这是行不通的，因为现成的数据库格式差别有点大，那么就只能看源码了。但其实我是不会perl的，在师姐的帮助下，完美的解决了这个问题。<br><br>&emsp;&emsp;虽然我们是使用<code>table_annovar.pl</code>进行注释的，实际上对于<code>region-based</code>数据库的注释是调用<code>annotate_variation.pl</code>，所以需要修改<code>annotate_variation.pl</code>的源码。在2998行我们可以看到，其实对于不同<code>region-based</code>数据库，都是有预设的。<br><img src="https://upload-images.jianshu.io/upload_images/11351859-3c73cb918e6f36c4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="annotate_variation.pl"></p>
-<p>&emsp;&emsp;所以根据CCRS的格式，我们可以在这里添加一个预设语句块。<br><img src="https://upload-images.jianshu.io/upload_images/11351859-4f060a17282443ca.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="ccrs预设"></p>
-<p>&emsp;&emsp;当然也可以根据最后一个<code>else语句块</code>修改CCRS的格式<br><img src="https://upload-images.jianshu.io/upload_images/11351859-67718505617129e8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="else语句块"></p>
+<h5 id="CCRS"><a href="#CCRS" class="headerlink" title="CCRS"></a>CCRS</h5><p>&emsp;&emsp;由于是基于区域的，那么在<code>-operation</code>参数里面呢是<code>r</code>，然后呢从网上下载下来的是一个bed文件，截取前十行，长这样。<br></p>
+<p><img src="/2019/06/18/WGS分析笔记（5）- annotation/1.png" alt="ccrs"></p>
+<p>&emsp;&emsp;这些信息其实我们只需要ccr_pct这一列的打分，为了方便起见，完全可以只保留前四列的内容，不然注释完会把所有前三列以后的内容都加到注释结果文件里。<br><br>&emsp;&emsp;那么这么一个文件是不能直接拿来用的，第一步就是改名。下载过annovar提供的数据库后可以知道，annovar使用的数据库都有自己的命名方式，这里的话直接改成 <code>hg19_ccrs.txt</code>即可，<code>hg19</code>表示所使用的参考基因组版本，因为CCRS 的坐标是基于hg19的，所以这里是hg19，ccrs就是<code>-protocol</code>参数里的标识符了，然后以<code>.txt</code>作为后缀。<br><br>&emsp;&emsp;然后是修改格式，一开始我用的方法是参考annovar提供的<code>region-based</code>数据库的格式，然后修改CCRS的格式。后来我发现这是行不通的，因为现成的数据库格式差别有点大，那么就只能看源码了。但其实我是不会perl的，在师姐的帮助下，完美的解决了这个问题。<br><br>&emsp;&emsp;虽然我们是使用<code>table_annovar.pl</code>进行注释的，实际上对于<code>region-based</code>数据库的注释是调用<code>annotate_variation.pl</code>，所以需要修改<code>annotate_variation.pl</code>的源码。在2998行我们可以看到，其实对于不同<code>region-based</code>数据库，都是有预设的。<br></p>
+<p><img src="/2019/06/18/WGS分析笔记（5）- annotation/2.png" alt="annotate_variation.pl"></p>
+<p>&emsp;&emsp;所以根据CCRS的格式，我们可以在这里添加一个预设语句块。<br></p>
+<p><img src="/2019/06/18/WGS分析笔记（5）- annotation/3.png" alt="ccrs预设"></p>
+<p>&emsp;&emsp;当然也可以根据最后一个<code>else语句块</code>修改CCRS的格式<br></p>
+<p><img src="/2019/06/18/WGS分析笔记（5）- annotation/4.png" alt="else语句块"></p>
 <p>&emsp;&emsp;从这个语句块可以看出来，只需要在CCRS原始文件前面添加一列内容，以<code>tab</code>隔开，就行，添加啥也都无所谓，这里就不赘述了。<br></p>
-<h5 id="S-CAP"><a href="#S-CAP" class="headerlink" title="S-CAP"></a>S-CAP</h5><p>&emsp;&emsp;由于是基于位点的，那么在<code>-operation</code>参数里面呢是<code>f</code>，然后呢从网上下载下来的文件，一共有八个文件（不同区域不同标准，可以参考论文），任意选取一个截取前十行，长这样。<br><img src="https://upload-images.jianshu.io/upload_images/11351859-0a9d67a4679a28a0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="S-CAP"></p>
+<h5 id="S-CAP"><a href="#S-CAP" class="headerlink" title="S-CAP"></a>S-CAP</h5><p>&emsp;&emsp;由于是基于位点的，那么在<code>-operation</code>参数里面呢是<code>f</code>，然后呢从网上下载下来的文件，一共有八个文件（不同区域不同标准，可以参考论文），任意选取一个截取前十行，长这样。<br></p>
+<p><img src="/2019/06/18/WGS分析笔记（5）- annotation/5.png" alt="S-CAP"></p>
 <p>&emsp;&emsp;这里我已经把名字修改了，如果大家有查看过<code>filter-based</code>数据库，大抵都是这个格式，染色染位置、起始位置、结束位置、参考碱基、突变碱基、要注释的内容（可以是多列），以<code>tab</code>隔开。这里可以发现，少了一列结束位置，那是因为论文只针对snp，所以不用start、end表示也可以，这里用一个简单的语句就可以解决这一点。<br></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk -F &quot;\t&quot; &apos;&#123;print $1&quot;\t&quot;$2&quot;\t&quot;$2&quot;\t&quot;$3&quot;\t&quot;$4&quot;\t&quot;$5&#125;&apos; scap3cr.txt &gt; hg19_scap3cr.txt</span><br></pre></td></tr></table></figure>
 
-<p>&emsp;&emsp;但是注意，这样是不够的，如果你看了这个论文，你会发现，这是预测splicing区域有害性的打分，更重要的是，论文中对splicing区域的划分和annovar默认的aplicing区域是不一样的！！！<br><br>&emsp;&emsp;在annovar里头，splicing的区域是2bp，也就是图中的1和4.<br><img src="https://upload-images.jianshu.io/upload_images/11351859-7ea3dce9fa5a8d27.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="splicing"><br>&emsp;&emsp;但是论文中作者为了更好的预测有害性，用了整整100bp的长度（内含子外显子各50bp），所以仅仅用annovar默认的splicing区域大小就太浪费这个打分了，那怎么扩大这个范围呢？<br><br>&emsp;&emsp;其实如果仔细看annovar说明书我们会发现，在<code>annotate_variation.pl</code>的脚本中有一个参数<code>--splicing_threshold</code>，可以控制splicing的区域大小，默认是2，但是我们用的是<code>table_annovar.pl</code>的脚本进行注释，虽然是调用<code>annotate_variation.pl</code>，但是却没有了<code>--splicing_threshold</code>这个参数，看来又只能改源码了。<br><br>&emsp;&emsp;在<code>table_annovar.pl</code>第380行（不同版本可能不太一样），有这么一句话。<br><img src="https://upload-images.jianshu.io/upload_images/11351859-0fd8c45c4d71bc24.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="--splicing_threshold"></p>
+<p>&emsp;&emsp;但是注意，这样是不够的，如果你看了这个论文，你会发现，这是预测splicing区域有害性的打分，更重要的是，论文中对splicing区域的划分和annovar默认的aplicing区域是不一样的！！！<br><br>&emsp;&emsp;在annovar里头，splicing的区域是2bp，也就是图中的1和4.<br></p>
+<p><img src="/2019/06/18/WGS分析笔记（5）- annotation/6.png" alt="splicing"><br>&emsp;&emsp;但是论文中作者为了更好的预测有害性，用了整整100bp的长度（内含子外显子各50bp），所以仅仅用annovar默认的splicing区域大小就太浪费这个打分了，那怎么扩大这个范围呢？<br><br>&emsp;&emsp;其实如果仔细看annovar说明书我们会发现，在<code>annotate_variation.pl</code>的脚本中有一个参数<code>--splicing_threshold</code>，可以控制splicing的区域大小，默认是2，但是我们用的是<code>table_annovar.pl</code>的脚本进行注释，虽然是调用<code>annotate_variation.pl</code>，但是却没有了<code>--splicing_threshold</code>这个参数，看来又只能改源码了。<br><br>&emsp;&emsp;在<code>table_annovar.pl</code>第380行（不同版本可能不太一样），有这么一句话。<br></p>
+<p><img src="/2019/06/18/WGS分析笔记（5）- annotation/7.png" alt="--splicing_threshold"></p>
 <p>&emsp;&emsp;里面在调用<code>annotate_variation.pl</code>的时候，直接给了<code>--splicing_threshold</code>这个参数，只要把后面的数字改成50就好了（原来是2）。至于怎么建立索引可以参考<a href="https://mp.weixin.qq.com/s/_h-EkT9YvffSOuViYT_gGQ" target="_blank" rel="noopener">这里</a>，是否建立索引会影响注释速度，但不会影响结果。<br><br>&emsp;&emsp;至此，这一部分内容就完了，我在实践中也就是这么使用的，具体的根据需要可以好好读一读annovar的官网说明。<br></p>
 <hr>
 <p>&emsp;&emsp;水平有限，要是存在什么错误请评论指出，可发送邮件至<a href="mailto:shiyuant@outlook.com" target="_blank" rel="noopener">shiyuant@outlook.com</a>！请大家多多批评指正，相互交流，共同成长，谢谢！！！</p>

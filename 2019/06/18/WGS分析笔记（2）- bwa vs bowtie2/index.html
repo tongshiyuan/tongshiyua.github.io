@@ -103,13 +103,30 @@
 
 
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Taro">
-<meta property="og:url" content="http://tongshiyuan.github.io/tags/WGS/index.html">
+  <meta name="description" content="在进行正式的mapping记录之前，先记录一下bwa与bowtie2在mapping这个环节的情况。  一般对于WGS结果的mapping，一般推荐的软件有两款，分别是bwa和bowtie2，大多数的公司报告或者网上的教程，我所看到的都是使用bwa进行比对的，这里，我来进行一下两个软件的对比。  实验对象还是之前文章提到的那个样本的数据，我只取用其中的一对数据进行mapping并比较。  比较之">
+<meta name="keywords" content="WGS,生信">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WGS分析笔记（2）-- bwa vs bowtie2">
+<meta property="og:url" content="http://tongshiyuan.github.io/2019/06/18/WGS分析笔记（2）- bwa vs bowtie2/index.html">
 <meta property="og:site_name" content="Taro">
+<meta property="og:description" content="在进行正式的mapping记录之前，先记录一下bwa与bowtie2在mapping这个环节的情况。  一般对于WGS结果的mapping，一般推荐的软件有两款，分别是bwa和bowtie2，大多数的公司报告或者网上的教程，我所看到的都是使用bwa进行比对的，这里，我来进行一下两个软件的对比。  实验对象还是之前文章提到的那个样本的数据，我只取用其中的一对数据进行mapping并比较。  比较之">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://tongshiyuan.github.io/2019/06/18/WGS分析笔记（2）-%20bwa%20vs%20bowtie2/%E6%97%B6%E9%97%B4%E5%AF%B9%E6%AF%94.png">
+<meta property="og:image" content="http://tongshiyuan.github.io/2019/06/18/WGS分析笔记（2）-%20bwa%20vs%20bowtie2/flagstat.png">
+<meta property="og:image" content="http://tongshiyuan.github.io/2019/06/18/WGS分析笔记（2）-%20bwa%20vs%20bowtie2/bam_stat.png">
+<meta property="og:image" content="http://tongshiyuan.github.io/2019/06/18/WGS分析笔记（2）-%20bwa%20vs%20bowtie2/bowtie2%E7%9A%84%E8%AF%B4%E6%98%8E.png">
+<meta property="og:image" content="http://tongshiyuan.github.io/2019/06/18/WGS分析笔记（2）-%20bwa%20vs%20bowtie2/SAM%E7%9A%84%E8%AF%B4%E6%98%8E.png">
+<meta property="og:image" content="http://tongshiyuan.github.io/2019/06/18/WGS分析笔记（2）-%20bwa%20vs%20bowtie2/%E5%AE%98%E7%BD%91%E8%AF%B4%E6%98%8E.png">
+<meta property="og:image" content="http://tongshiyuan.github.io/2019/06/18/WGS分析笔记（2）-%20bwa%20vs%20bowtie2/bowtie2.png">
+<meta property="og:image" content="http://tongshiyuan.github.io/2019/06/18/WGS分析笔记（2）-%20bwa%20vs%20bowtie2/bwa.png">
+<meta property="og:image" content="http://tongshiyuan.github.io/2019/06/18/WGS分析笔记（2）-%20bwa%20vs%20bowtie2/bowtie2.log.png">
+<meta property="og:image" content="http://tongshiyuan.github.io/2019/06/18/WGS分析笔记（2）-%20bwa%20vs%20bowtie2/bowtie2_tag.png">
+<meta property="og:image" content="http://tongshiyuan.github.io/2019/06/18/WGS分析笔记（2）-%20bwa%20vs%20bowtie2/mapq%E5%88%86%E5%B8%83.png">
+<meta property="og:updated_time" content="2019-06-18T04:47:44.696Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Taro">
+<meta name="twitter:title" content="WGS分析笔记（2）-- bwa vs bowtie2">
+<meta name="twitter:description" content="在进行正式的mapping记录之前，先记录一下bwa与bowtie2在mapping这个环节的情况。  一般对于WGS结果的mapping，一般推荐的软件有两款，分别是bwa和bowtie2，大多数的公司报告或者网上的教程，我所看到的都是使用bwa进行比对的，这里，我来进行一下两个软件的对比。  实验对象还是之前文章提到的那个样本的数据，我只取用其中的一对数据进行mapping并比较。  比较之">
+<meta name="twitter:image" content="http://tongshiyuan.github.io/2019/06/18/WGS分析笔记（2）-%20bwa%20vs%20bowtie2/%E6%97%B6%E9%97%B4%E5%AF%B9%E6%AF%94.png">
 
 
 
@@ -119,7 +136,7 @@
 
   
   
-  <link rel="canonical" href="http://tongshiyuan.github.io/tags/WGS/">
+  <link rel="canonical" href="http://tongshiyuan.github.io/2019/06/18/WGS分析笔记（2）- bwa vs bowtie2/">
 
 
 
@@ -129,7 +146,7 @@
   };
 </script>
 
-  <title>标签: WGS | Taro</title>
+  <title>WGS分析笔记（2）-- bwa vs bowtie2 | Taro</title>
   
 
 
@@ -177,7 +194,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
     <a href="https://github.com/tongshiyuan" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -249,7 +266,7 @@
         
         
           
-          <li class="menu-item menu-item-tags menu-item-active">
+          <li class="menu-item menu-item-tags">
 
     
     
@@ -313,28 +330,6 @@
   
     
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
   
 
   
@@ -380,109 +375,326 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block tag">
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>WGS<small>标签</small>
-        </h1>
-      </div>
-
-      
-        
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://tongshiyuan.github.io/2019/06/18/WGS分析笔记（2）- bwa vs bowtie2/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="TongShiyuan">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/logo.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Taro">
+    </span>
+
+    
+      <header class="post-header">
+
         
-          <a class="post-title-link" href="/2019/06/18/WGS分析笔记（2）- bwa vs bowtie2/" itemprop="url">
-            
-              <span itemprop="name">WGS分析笔记（2）-- bwa vs bowtie2</span>
-            
-          </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">WGS分析笔记（2）-- bwa vs bowtie2
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-06-18T11:10:20+08:00" content="2019-06-18">
-          06-18
-        </time>
-      </div>
+              
+            
+          </h1>
+        
 
-    </header>
-  </article>
+        <div class="post-meta">
+          <span class="post-time">
 
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-06-18 11:10:20 / 修改时间：12:47:44" itemprop="dateCreated datePublished" datetime="2019-06-18T11:10:20+08:00">2019-06-18</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/我的WGS/" itemprop="url" rel="index"><span itemprop="name">我的WGS</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/06/18/WGS分析笔记（1）- 原始数据以及质控/" itemprop="url">
-            
-              <span itemprop="name">WGS分析笔记（1）- 原始数据以及质控</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-06-18T00:23:29+08:00" content="2019-06-18">
-          06-18
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+      
 
       
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/06/17/WGS分析笔记（0）- 我的数据/" itemprop="url">
-            
-              <span itemprop="name">WGS分析笔记（0）- 我的数据</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-06-17T22:15:01+08:00" content="2019-06-17">
-          06-17
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+        <ul>
+<li><p>在进行正式的mapping记录之前，先记录一下bwa与bowtie2在mapping这个环节的情况。<br></p>
+</li>
+<li><p>一般对于WGS结果的mapping，一般推荐的软件有两款，分别是bwa和bowtie2，大多数的公司报告或者网上的教程，我所看到的都是使用bwa进行比对的，这里，我来进行一下两个软件的对比。<br></p>
+</li>
+<li><p>实验对象还是之前文章提到的那个样本的数据，我只取用其中的一对数据进行mapping并比较。<br></p>
+</li>
+<li><p>比较之前先进行一下软件安装、参考序列下载并建立索引<br></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">bowtie2</span><br><span class="line">	$ wget https://sourceforge.net/projects/bowtie-bio/files/bowtie2/2.3.4.3/bowtie2-2.3.4.3-linux-x86_64.zip</span><br><span class="line">	# https://sourceforge.net/projects/bowtie-bio/files/bowtie2/2.3.4/bowtie2-2.3.4-linux-x86_64.zip</span><br><span class="line">	$ unzip bowtie2-2.2.9-linux-x86_64.zip</span><br><span class="line">	$ ln -sf /biosoft/bowtie2-2.3.4.3-linux-x86_64/bowtie2 /home/shiyuantong/bin/bowtie2</span><br><span class="line">BWA:</span><br><span class="line">	$ wget https://sourceforge.net/projects/bio-bwa/files/bwa-0.7.17.tar.bz2</span><br><span class="line">	$ tar -jxvf bwa-0.7.17.tar.bz2 # x extracts, v is verbose (details of what it is doing), f skips prompting for each individual file, and j tells it to unzip .bz2 files</span><br><span class="line">	$ make</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>关于安装这里有一些需要注意的地方！！！！！<br></p>
+</li>
+<li><p>首先是bowtie2，建议大家使用2.3.4的下载链接，我在下载的时候最新版是2.3.4.3，但是在使用的出现了报错！！！！！<br></p>
+</li>
+<li><p>报错的内容如下（当时没截图）：<br><br>&emsp;&emsp;&emsp;&emsp;Segmentation fault (core dumped) (ERR): bowtie2-align exited with value 139</p>
+</li>
+<li><p>这个报错只会出现在批量处理的脚本中，对单个样本的处理并没有影响，但是实际使用的时候，大家都是批量处理样本，怎么可能一个样本一个命令，因此推荐2.3.4的版本，当然，下面的比较不会涉及这个问题。<br></p>
+</li>
+<li><p>还有就是BWA了，这个软件ubuntu用户也可以直接使用<code>sudo apt-get install bwa</code>命令进行安装，我看了一下，两种方法的版本是一致的，都是0.7.17。<br></p>
+</li>
+<li><p>然后是参考序列，这里直接使用ucsc的hg19，下载与建立索引方式如下，根据自己的需要调整目录<br></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">hg19：</span><br><span class="line">	$ cd /your/path/of/reference/</span><br><span class="line">	$ wget http://hgdownload.cse.ucsc.edu/goldenPath/hg19/bigZips/chromFa.tar.gz</span><br><span class="line">	$ tar zvfx chromFa.tar.gz</span><br><span class="line">	$ cat *.fa &gt; hg19.fa</span><br><span class="line">	$ rm chr*.fa</span><br><span class="line">建立bwa索引：</span><br><span class="line">	$ bwa index -a bwtsw  hg19.fa</span><br><span class="line"> 	# 产生.bwt .pac .ann .amb .sa五个新文件</span><br><span class="line">	# -a：两种构建index算法，bwtsw以及is，bwtsw适用大于10MB的参考基因组，比如人，is适用于小于2GB的数据库，是默认的算法，速度较快，需要较大的内存，</span><br><span class="line">	# -p：输出数据库的前缀，默认与输入文件名一致，这里我没有加这个参数，直接输出到当前目录</span><br><span class="line">建立bowtie2索引：</span><br><span class="line">	$ bowtie2-build hg19.fa hg19.fa</span><br><span class="line">	# bowtie2-build命令在安装bowtie2的目录下找到</span><br><span class="line">	# 第一个hg19.fa代表输入的参考序列</span><br><span class="line">	# 第二个hg19.fa代表输出的索引文件前缀</span><br><span class="line">	# 产生六个.bt2新文件</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>上述程序建立索引速度较慢，尤其是bowtie2，但是一次建好，一劳永逸，请大家耐心等待，也可以放在后台，防止终端突然的中断。<br></p>
+</li>
+<li><p>建立好索引就可以直接开始比对了，以下是我的比对程序，都开了24线程，用<code>nohup …… &amp;</code>放在后台运行，用<code>time</code>记录时间。<br></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ nohup time bowtie2 -p 24 -x /your/path/of/reference/ucsc.hg19.fasta --rg-id W2018001 --rg PL:ILLUMINA --rg LB:W2018001 --rg SM:W2018001 -1 W2018001_NZTD180602206_HCV5MDMXX_L1.cleaned.1.fq.gz -2 W2018001_NZTD180602206_HCV5MDMXX_L1.cleaned.2.fq.gz -S W2018001.bowtie2.sam &gt; W2018001.bowtie2.log &amp;</span><br><span class="line">$ nohup time bwa mem -t 24 -M -R &quot;@RG\tID:W2018001\tPL:ILLUMINA\tLB:W2018001\tSM:W2018001&quot; /your/path/of/reference/ucsc.hg19.fasta W2018001_NZTD180602206_HCV5MDMXX_L1.cleaned.1.fq.gz W2018001_NZTD180602206_HCV5MDMXX_L1.cleaned.2.fq.gz 1&gt;W2018001.bwa.sam 2&gt;W2018001.bwa.log &amp;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>这一步会比较久，我也是经过漫长的半天等待终于迎来了结果，首先看一下速度吧。先前的脚本使用了<code>time</code>的命令，可以直接看到速度，在日志文件里。<br><br><img src="/2019/06/18/WGS分析笔记（2）- bwa vs bowtie2/%E6%97%B6%E9%97%B4%E5%AF%B9%E6%AF%94.png" alt="时间对比"></p>
+</li>
+<li><p>日志文件的最后两行就是<code>time</code>命令输出的结果，所以没有必要用<code>cat</code>查看，而且bwa的日志文件，要是用<code>cat</code>怕是屏幕要炸。图中可以看到两个红色的框，就是我标出来的时间。（其实我原来用<code>time</code>命令，结果不长这样的，这个结果不太利于观看，但是也能说明问题了）<br></p>
+</li>
+<li><p>很明显的可以看到半套全基因组的数据（我只用了样本一半的数据）bowtie2跑的更快一些，但其实大家不用纠结这个点。因为上一次我用24线程，一样的脚本一样的数据，跑bowtie2花了六个多小时，速度没有bwa快，同时以前在使用酵母的测序数据（数据量会比较小）的时候，明显发现bwa速度比bowtie2快，甚至在说法上你也会发现不同的人给你的说法是不一样的，有些人说bwa快有些人说bowtie2快，网上看帖子也没有一个十分明确的说法哪个速度快。这里大家完全可以用自己的数据和脚本跑一下，看看结果。<br></p>
+</li>
+<li><p>接下来我想看看比对效果，这里我先采用了samtools的flagstat分别进行统计，下面是安装samtools的步骤：<br></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">samtools:</span><br><span class="line">	$ wget https://github.com/samtools/samtools/releases/download/1.9/samtools-1.9.tar.bz2</span><br><span class="line">	$ tar xvfj samtools-1.9.tar.bz2</span><br><span class="line">	$ cd samtools-1.9</span><br><span class="line">	$ ./configure --prefix=/where/to/install</span><br><span class="line">	$ make</span><br><span class="line">	$ make install</span><br><span class="line"># samtools其实我到现在为止装的最崩溃的软件之一了，因为在实际安装的时候你会发现它需要各种各样的库的支持，对于使用新机器的我，我基本是安装，报错缺什么库，安装缺的库，重新安装，这么折腾了一下午</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>接下来就是使用统计工具，其实很简单。<br></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ samtools flagstat W2018001.bowtie2.sam &gt;W2018001.bowtie2.flagstat</span><br><span class="line">$ samtools flagstat W2018001.bwa.sam &gt;W2018001.bwa.flagstat</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>这个也需要花一点时间，但不会太长，看一下结果。<br><br><img src="/2019/06/18/WGS分析笔记（2）- bwa vs bowtie2/flagstat.png" alt="flagstat"></p>
+</li>
+<li><p>这个结果还是比较清楚的，bwa的结果比bowtie2稍稍好一点。但相差不是很大，所以对于这两个软件，一直是公说公有理，婆说婆有理，这里我用另一个软件对结果进行统计，再进行对比试试。<br></p>
+</li>
+<li><p><a href="https://rseqc.sourceforge.net" target="_blank" rel="noopener">RSeQC</a>是一个功能强大的软件，里面有很多实用的小工具，其中的bam_stat就是一个实用的bam/sam结果统计工具，安装方式也是相当简单了，就是一个python的包，支持python2.x和python3.x，这里我选用python3的pip来安装，因为本人习惯使用python3。<br></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pip3 install RSeQC</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用和结果如下，由于我这个sam文件比较大，运行起来比较慢，所以我开了俩终端。<br><br><img src="/2019/06/18/WGS分析笔记（2）- bwa vs bowtie2/bam_stat.png" alt="bam_stat"></p>
+</li>
+<li><p>其实我最想看的unique mapping的reads，因为后期为了降低假阳性，在处理bam文件的时候会选择unique mapped的reads，但是在查看说明书无果后，找遍论坛没有找到一个能够说服我的筛选unique mapped的方式。<br></p>
+</li>
+<li><p>有这么几个方式，一个说是看tag，但是bwa的结果，你仔细看说明书和结果，会发现，这个tag并没有什么用，bowtie2倒是还可以。<br></p>
+</li>
+<li><p>第二个也是说的比较多的一个，看MAPQ。那么mapq是啥呢，我来贴几张图。<br></p>
+</li>
+</ul>
+<p><img src="/2019/06/18/WGS分析笔记（2）- bwa vs bowtie2/bowtie2%E7%9A%84%E8%AF%B4%E6%98%8E.png" alt="bowtie2的说明"></p>
+<p><img src="/2019/06/18/WGS分析笔记（2）- bwa vs bowtie2/SAM%E7%9A%84%E8%AF%B4%E6%98%8E.png" alt="SAM的说明"></p>
+<p><img src="/2019/06/18/WGS分析笔记（2）- bwa vs bowtie2/%E5%AE%98%E7%BD%91%E8%AF%B4%E6%98%8E.png" alt="官网说明"></p>
+<ul>
+<li>分别是sam格式官网的说明，bowtie2官网的说明，这两个说明的公式是一样的，都指向最后一个官网的说明。看到这个官网的公式，我直接就傻掉了，反正到现在也没推出个所以然来。但是前两张图就很好理解了。但是和很多人说的MAPQ&gt;=1就是unique mapping，我觉得是对不上的。对于这点我不多说，<a href="http://qiubio.com/archives/3321" target="_blank" rel="noopener">这里</a>的解释也是目前为止我最能接受的。<br></li>
+<li>那上面那个结果，bam_stat，我在阅读源码后，发现是以MAPQ&gt;=30作为阈值来挑选是否unique的。由于bwa和bowtie2的mapq的计算方式不一样，这个结果其实并不可信。于是我写了一个脚本，看了一下mapq的分布情况。<br></li>
+</ul>
+<p><img src="/2019/06/18/WGS分析笔记（2）- bwa vs bowtie2/bowtie2.png" alt="bowtie2"></p>
+<p><img src="/2019/06/18/WGS分析笔记（2）- bwa vs bowtie2/bwa.png" alt="bwa"></p>
+<ul>
+<li><p>这个图能说明什么呢，有待商榷。<br></p>
+</li>
+<li><p>这个时候再回过来看一下bowtie2的输出结果和大家说的bowtie2的筛选unique mapping的方法以及结果。<br><br><img src="/2019/06/18/WGS分析笔记（2）- bwa vs bowtie2/bowtie2.log.png" alt="bowtie2.log"><br><img src="/2019/06/18/WGS分析笔记（2）- bwa vs bowtie2/bowtie2_tag.png" alt="bowtie2_tag"></p>
+</li>
+<li><p>其实到这里我也不知道该怎么办了，到现在还是不知道，bwa结果用mapq&gt;=1是否能得到unique mapping。这个结果对于后续分析影响有多大我不好说，至于怎么选择，我也不发表意见，不过在后续的筛选中，gatk给出的建议是mapq&gt;=40。<br></p>
+</li>
+<li><p>2019-1-9补充bwa结果，按mapq分布，分别计算&gt;=1,10,20,30的比例。为大家选择MAPQ作为筛选提供一个参考。<br><br><img src="/2019/06/18/WGS分析笔记（2）- bwa vs bowtie2/mapq%E5%88%86%E5%B8%83.png" alt="MAPQ比例"></p>
+</li>
+<li><p>但是回归主题，bwa和bowtie2，我决定选择bwa。<br></p>
+</li>
+<li><p>水平有限，要是存在什么错误请评论指出，可发送邮件至<a href="mailto:shiyuant@outlook.com" target="_blank" rel="noopener">shiyuant@outlook.com</a>！请大家多多批评指正，相互交流，共同成长，谢谢！！！<br></p>
+</li>
+</ul>
 
       
     </div>
 
+    
+
+    
+    
+    
+
+    <div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+  
+</div>
+    <div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <p><span>本文标题:</span><a href="/2019/06/18/WGS分析笔记（2）- bwa vs bowtie2/">WGS分析笔记（2）-- bwa vs bowtie2</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 TongShiyuan 的个人博客">TongShiyuan</a></p>
+  <p><span>发布时间:</span>2019年06月18日 - 11:06</p>
+  <p><span>最后更新:</span>2019年06月18日 - 12:06</p>
+  <p><span>原始链接:</span><a href="/2019/06/18/WGS分析笔记（2）- bwa vs bowtie2/" title="WGS分析笔记（2）-- bwa vs bowtie2">http://tongshiyuan.github.io/2019/06/18/WGS分析笔记（2）- bwa vs bowtie2/</a>
+    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://tongshiyuan.github.io/2019/06/18/WGS分析笔记（2）- bwa vs bowtie2/" aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    $(".fa-clipboard").click(function(){
+      clipboard.on('success', function(){
+        swal({   
+          title: "",   
+          text: '复制成功',
+          icon: "success", 
+          showConfirmButton: true
+          });
+    });
+    });  
+</script>
+
+      
+    </div>
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/WGS/" rel="tag"># WGS</a>
+          
+            <a href="/tags/生信/" rel="tag"># 生信</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/18/WGS分析笔记（1）- 原始数据以及质控/" rel="next" title="WGS分析笔记（1）- 原始数据以及质控">
+                <i class="fa fa-chevron-left"></i> WGS分析笔记（1）- 原始数据以及质控
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+  </div>
 
 
           </div>
           
+
+  
+
+
 
         </div>
         
@@ -798,6 +1010,10 @@
 
 
   
+  <script src="/js/scrollspy.js?v=7.1.2"></script>
+<script src="/js/post-details.js?v=7.1.2"></script>
+
+
 
   
 
@@ -813,6 +1029,8 @@
 
   
 
+
+  
 
 
   

@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://tongshiyuan.github.io/"/>
-  <updated>2019-06-18T05:45:05.259Z</updated>
+  <updated>2019-06-18T05:58:24.737Z</updated>
   <id>http://tongshiyuan.github.io/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>fastqc的线程与速度测试</title>
+    <link href="http://tongshiyuan.github.io/2019/06/18/fastqc%E7%9A%84%E7%BA%BF%E7%A8%8B%E4%B8%8E%E9%80%9F%E5%BA%A6%E6%B5%8B%E8%AF%95/"/>
+    <id>http://tongshiyuan.github.io/2019/06/18/fastqc的线程与速度测试/</id>
+    <published>2019-06-18T05:49:45.000Z</published>
+    <updated>2019-06-18T05:58:24.737Z</updated>
+    
+    <content type="html"><![CDATA[<p>&emsp;&emsp;之前文章写了bowtie2和bwa的比较，发完之后立刻被师姐批评指正了，然后师姐又给我补充了一个知识，就是不同软件都有它的最佳线程数，不是线程越高就跑的越快，直接一个软件定个24线程是不合理的。至于这个最佳线程数是多少，说明书要是没有的话，要么自己评测，要么问问作者。<br><br>&emsp;&emsp;我看了bwa的说明书，没有相关说明，粗略的查了一下帖子也没看到。让我自己评测一下bwa的速度，我是嫌麻烦的，于是我就尝试着评测一下fastqc。因为一开始我就是加大了这个的使用线程，也没考虑是不是有必要，而且这个速度也快，操作也方便，所以做个简单的速度测试。<br><br>&emsp;&emsp;软件是fastqc，选用的对象是一个cleaned data，还是比较大的，测试脚本如下：<br></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ time fastqc -o singleout1/ -t 1 1.fq.gz</span><br><span class="line">$ time fastqc -o singleout3/ -t 3 1.fq.gz</span><br><span class="line">$ time fastqc -o singleout6/ -t 6 1.fq.gz</span><br><span class="line">$ time fastqc -o singleout8/ -t 8 1.fq.gz</span><br><span class="line">$ time fastqc -o singleout12/ -t 12 1.fq.gz</span><br><span class="line">$ time fastqc -o singleout16/ -t 16 1.fq.gz</span><br><span class="line">$ time fastqc -o singleout24/ -t 24 1.fq.gz</span><br></pre></td></tr></table></figure><p>&emsp;&emsp;结果如下：<br><img src="/2019/06/18/fastqc的线程与速度测试/1.png" alt="1线程"><br><img src="/2019/06/18/fastqc的线程与速度测试/2.png" alt="3线程"><br><img src="/2019/06/18/fastqc的线程与速度测试/3.png" alt="6线程"><br><img src="/2019/06/18/fastqc的线程与速度测试/4.png" alt="8线程"><br><img src="/2019/06/18/fastqc的线程与速度测试/5.png" alt="12线程"><br><img src="/2019/06/18/fastqc的线程与速度测试/6.png" alt="16线程"><br><img src="/2019/06/18/fastqc的线程与速度测试/7.png" alt="24线程"><br>&emsp;&emsp;看到这个结果，我……有点吃惊的，居然都是一样的。那我脚本里写那么大的线程意义何在？<br><br>&emsp;&emsp;所以我又加了一个测试，测试多个样本下的不同线程的速度，当前文件夹下有4个fq文件。测试脚本如下：<br></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ time fastqc -o allout1/ -t 1 *.fq.gz</span><br><span class="line">$ time fastqc -o allout6/ -t 6 *.fq.gz</span><br><span class="line">$ time fastqc -o allout12/ -t 12 *.fq.gz</span><br></pre></td></tr></table></figure><p>&emsp;&emsp;结果如下：<br><br><img src="/2019/06/18/fastqc的线程与速度测试/8.png" alt="12线程"><br><img src="/2019/06/18/fastqc的线程与速度测试/9.png" alt="6线程"><br><img src="/2019/06/18/fastqc的线程与速度测试/10.png" alt="1线程"></p><p>&emsp;&emsp;我想大家已经看出来了，对于单个样本，fastqc每增加一个线程并不改变运行速度，但是对于多个输入文件，每增加一个线程会多并行跑一个输入文件，就是说，比如输入四个文件，四线程会同时跑四个文件，单线程只能一个一个跑。<br><br>&emsp;&emsp;能得到一个结论还是挺开心的，那么以后在fastqc线程选择的时候也就知道多少的线程数是有必要的。<br><br>&emsp;&emsp;水平有限，要是存在什么错误请评论指出，可发送邮箱至<a href="mailto:shiyuant@outlook.com" target="_blank" rel="noopener">shiyuant@outlook.com</a>！请大家多多批评指正，相互交流，共同成长，谢谢！！！<br></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;&amp;emsp;&amp;emsp;之前文章写了bowtie2和bwa的比较，发完之后立刻被师姐批评指正了，然后师姐又给我补充了一个知识，就是不同软件都有它的最佳线程数，不是线程越高就跑的越快，直接一个软件定个24线程是不合理的。至于这个最佳线程数是多少，说明书要是没有的话，要么自己评
+      
+    
+    </summary>
+    
+      <category term="WGS工具测试记录" scheme="http://tongshiyuan.github.io/categories/WGS%E5%B7%A5%E5%85%B7%E6%B5%8B%E8%AF%95%E8%AE%B0%E5%BD%95/"/>
+    
+    
+      <category term="WGS" scheme="http://tongshiyuan.github.io/tags/WGS/"/>
+    
+      <category term="生信" scheme="http://tongshiyuan.github.io/tags/%E7%94%9F%E4%BF%A1/"/>
+    
+      <category term="测试" scheme="http://tongshiyuan.github.io/tags/%E6%B5%8B%E8%AF%95/"/>
+    
+  </entry>
   
   <entry>
     <title>WGS分析笔记（5）- annotation</title>

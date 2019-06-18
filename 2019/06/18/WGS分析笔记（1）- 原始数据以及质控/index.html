@@ -118,7 +118,7 @@
 <meta property="og:image" content="http://tongshiyuan.github.io/2019/06/18/WGS分析笔记（1）-%20原始数据以及质控/fastqc%E6%8A%A5%E9%94%99.jpg">
 <meta property="og:image" content="http://tongshiyuan.github.io/2019/06/18/WGS分析笔记（1）-%20原始数据以及质控/fastqc.png">
 <meta property="og:image" content="http://tongshiyuan.github.io/2019/06/18/WGS分析笔记（1）-%20原始数据以及质控/fastp.png">
-<meta property="og:updated_time" content="2019-06-18T02:53:37.965Z">
+<meta property="og:updated_time" content="2019-06-18T02:58:33.408Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="WGS分析笔记（1）- 原始数据以及质控">
 <meta name="twitter:description" content="二代测序方式分为三种：  single read 单端测序 paired-end read 双端测序 mate-pair read 配对测序   虽然有三种方式，但是大多数数据（包括本课题）为双端测序，至于三者之间的差别、优缺点以及适用场合可以自行搜索。  接下来讲的内容都是基于双端测序的。  测序仪原始下机的数据我们称为raw data，二代测序是将DNA片段打断了再测的，每个测序片段我们称为">
@@ -430,7 +430,7 @@
                 
               
 
-              <time title="创建时间：2019-06-18 00:23:29 / 修改时间：10:53:37" itemprop="dateCreated datePublished" datetime="2019-06-18T00:23:29+08:00">2019-06-18</time>
+              <time title="创建时间：2019-06-18 00:23:29 / 修改时间：10:58:33" itemprop="dateCreated datePublished" datetime="2019-06-18T00:23:29+08:00">2019-06-18</time>
             
 
             
@@ -588,24 +588,16 @@
 <td>ATCACG</td>
 <td>Index sequence</td>
 </tr>
-<tr>
-<td>- 第一个是测序机器ID，独一无二的，你可以去illumina官网查到的（我没查过）<br></td>
-<td></td>
-</tr>
-<tr>
-<td>- 第二个是这个机器跑的次数，一般机器都是有使用寿命的，所以次数越多肯定结果越差，那么一般在什么区间合适呢，我的老师给的建议是200-9999，为啥还有下限呢，那是因为，机器刚开始跑的那几次，需要磨合嘛，不是很准。看来这个展示数据不是很好啊，吓得我赶紧去看了下我的数据，还好，在212次（懒得贴图了，hexo弄个图比简书还麻烦），在范围内。<br></td>
-<td></td>
-</tr>
-<tr>
-<td>- 倒数第三个，表示数据有没有被过滤过，一般我们的原始数据肯定是N的，要是给的原始数据是Y，你就得好好问问公司原因了。<br></td>
-<td></td>
-</tr>
-<tr>
-<td>- 其余具体的我就不解释了，有问题可以评论交流。<br></td>
-<td></td>
-</tr>
 </tbody></table>
 <ul>
+<li><p>第一个是测序机器ID，独一无二的，你可以去illumina官网查到的（我没查过）<br></p>
+</li>
+<li><p>第二个是这个机器跑的次数，一般机器都是有使用寿命的，所以次数越多肯定结果越差，那么一般在什么区间合适呢，我的老师给的建议是200-9999，为啥还有下限呢，那是因为，机器刚开始跑的那几次，需要磨合嘛，不是很准。看来这个展示数据不是很好啊，吓得我赶紧去看了下我的数据，还好，在212次（懒得贴图了，hexo弄个图比简书还麻烦），在范围内。<br></p>
+</li>
+<li><p>倒数第三个，表示数据有没有被过滤过，一般我们的原始数据肯定是N的，要是给的原始数据是Y，你就得好好问问公司原因了。<br></p>
+</li>
+<li><p>其余具体的我就不解释了，有问题可以评论交流。<br></p>
+</li>
 <li><p>第二行要注意的是，可能有N的出现，那是因为有些碱基没被测出来。<br></p>
 </li>
 <li><p>第四行是ASCII码表示的碱基质量，这样就能保证质量是用一个字符表示的，和碱基一一对应。公式如下：<br><br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;P=10^-[(n-33)/10]</p>

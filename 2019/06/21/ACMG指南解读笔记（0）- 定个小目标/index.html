@@ -103,13 +103,18 @@
 
 
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Taro">
-<meta property="og:url" content="http://tongshiyuan.github.io/tags/生信/index.html">
+  <meta name="description" content="好久没有更新内容，照理来说对于call出来的SNVs/INDELs，下一步的工作就是筛选了，一般的筛选方式大体会有这些步骤：  保留数据库中已报道的致病位点（Clinvar、HGMD）  过库筛选（人群频率数据库）  保留coding区域（一般是exonic和splicing，下同）  保留有害位点（通过预测软件打分）  去除非高度保守区同义突变（GERP++等判别）  遗传模式过滤  以及其他">
+<meta name="keywords" content="ACMG,生信,WGS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ACMG指南解读笔记（0）- 定个小目标">
+<meta property="og:url" content="http://tongshiyuan.github.io/2019/06/21/ACMG指南解读笔记（0）- 定个小目标/index.html">
 <meta property="og:site_name" content="Taro">
+<meta property="og:description" content="好久没有更新内容，照理来说对于call出来的SNVs/INDELs，下一步的工作就是筛选了，一般的筛选方式大体会有这些步骤：  保留数据库中已报道的致病位点（Clinvar、HGMD）  过库筛选（人群频率数据库）  保留coding区域（一般是exonic和splicing，下同）  保留有害位点（通过预测软件打分）  去除非高度保守区同义突变（GERP++等判别）  遗传模式过滤  以及其他">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-06-21T14:47:30.610Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Taro">
+<meta name="twitter:title" content="ACMG指南解读笔记（0）- 定个小目标">
+<meta name="twitter:description" content="好久没有更新内容，照理来说对于call出来的SNVs/INDELs，下一步的工作就是筛选了，一般的筛选方式大体会有这些步骤：  保留数据库中已报道的致病位点（Clinvar、HGMD）  过库筛选（人群频率数据库）  保留coding区域（一般是exonic和splicing，下同）  保留有害位点（通过预测软件打分）  去除非高度保守区同义突变（GERP++等判别）  遗传模式过滤  以及其他">
 
 
 
@@ -119,7 +124,7 @@
 
   
   
-  <link rel="canonical" href="http://tongshiyuan.github.io/tags/生信/">
+  <link rel="canonical" href="http://tongshiyuan.github.io/2019/06/21/ACMG指南解读笔记（0）- 定个小目标/">
 
 
 
@@ -129,7 +134,7 @@
   };
 </script>
 
-  <title>标签: 生信 | Taro</title>
+  <title>ACMG指南解读笔记（0）- 定个小目标 | Taro</title>
   
 
 
@@ -177,7 +182,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
     <a href="https://github.com/tongshiyuan" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -249,7 +254,7 @@
         
         
           
-          <li class="menu-item menu-item-tags menu-item-active">
+          <li class="menu-item menu-item-tags">
 
     
     
@@ -313,28 +318,6 @@
   
     
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
   
 
   
@@ -380,239 +363,321 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block tag">
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>生信<small>标签</small>
-        </h1>
-      </div>
-
-      
-        
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://tongshiyuan.github.io/2019/06/21/ACMG指南解读笔记（0）- 定个小目标/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="TongShiyuan">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/logo.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Taro">
+    </span>
+
+    
+      <header class="post-header">
+
         
-          <a class="post-title-link" href="/2019/06/21/ACMG指南解读笔记（0）- 定个小目标/" itemprop="url">
-            
-              <span itemprop="name">ACMG指南解读笔记（0）- 定个小目标</span>
-            
-          </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">ACMG指南解读笔记（0）- 定个小目标
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-06-21T16:49:41+08:00" content="2019-06-21">
-          06-21
-        </time>
-      </div>
+              
+            
+          </h1>
+        
 
-    </header>
-  </article>
+        <div class="post-meta">
+          <span class="post-time">
 
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-06-21 16:49:41 / 修改时间：22:47:30" itemprop="dateCreated datePublished" datetime="2019-06-21T16:49:41+08:00">2019-06-21</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/我的WGS之ACMG解读/" itemprop="url" rel="index"><span itemprop="name">我的WGS之ACMG解读</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/06/18/fastqc的线程与速度测试/" itemprop="url">
-            
-              <span itemprop="name">fastqc的线程与速度测试</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-06-18T13:49:45+08:00" content="2019-06-18">
-          06-18
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+      
 
       
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/06/18/WGS分析笔记（5）- annotation/" itemprop="url">
-            
-              <span itemprop="name">WGS分析笔记（5）- annotation</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-06-18T12:52:03+08:00" content="2019-06-18">
-          06-18
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/06/18/WGS分析笔记（4）- Call SNVs indels/" itemprop="url">
-            
-              <span itemprop="name">WGS分析笔记（4）- Call SNVs/indels</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-06-18T12:51:38+08:00" content="2019-06-18">
-          06-18
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/06/18/WGS分析笔记（3）- bam文件的处理/" itemprop="url">
-            
-              <span itemprop="name">WGS分析笔记（3）- bam文件的处理</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-06-18T12:50:51+08:00" content="2019-06-18">
-          06-18
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/06/18/WGS分析笔记（2）- bwa vs bowtie2/" itemprop="url">
-            
-              <span itemprop="name">WGS分析笔记（2）- bwa vs bowtie2</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-06-18T11:10:20+08:00" content="2019-06-18">
-          06-18
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/06/18/WGS分析笔记（1）- 原始数据以及质控/" itemprop="url">
-            
-              <span itemprop="name">WGS分析笔记（1）- 原始数据以及质控</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-06-18T00:23:29+08:00" content="2019-06-18">
-          06-18
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/06/17/WGS分析笔记（0）- 我的数据/" itemprop="url">
-            
-              <span itemprop="name">WGS分析笔记（0）- 我的数据</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-06-17T22:15:01+08:00" content="2019-06-17">
-          06-17
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+        <ul>
+<li><p>好久没有更新内容，照理来说对于call出来的SNVs/INDELs，下一步的工作就是筛选了，一般的筛选方式大体会有这些步骤：<br></p>
+<ul>
+<li><p>保留数据库中已报道的致病位点（Clinvar、HGMD）<br></p>
+</li>
+<li><p>过库筛选（人群频率数据库）<br></p>
+</li>
+<li><p>保留coding区域（一般是exonic和splicing，下同）<br></p>
+</li>
+<li><p>保留有害位点（通过预测软件打分）<br></p>
+</li>
+<li><p>去除非高度保守区同义突变（GERP++等判别）<br></p>
+</li>
+<li><p>遗传模式过滤<br></p>
+</li>
+<li><p>以及其他<br></p>
+</li>
+</ul>
+</li>
+<li><p>如果在某疾病患者中（指单基因遗传病，符合孟德尔遗传定律，下同），找到了该疾病已经报道的致病突变位点，那大体来说，这个位点就会被判断为该患者的致病突变。<br></p>
+</li>
+<li><p>在这里，我们一般更认可HGMD中收录的记录，相对来说，Clinvar就是一个比较“脏”的数据库，因为这个公共数据库中的位点信息是大家都可以上传的，没有经过专门的筛选和“清洗”，真实性相对较差。而反过来，Clinvar是一个免费数据库，可以随时下载使用；HGMD的专业版收费是真的高，一般的课题组怕是很难吃得消，HGMD的公开版不收录近三年的信息（别看三年，差异很大，尤其是现在科学进展越来越快），只提供检索，不提供下载。所以要是买不起HGMD，Clinvar也就将就一点凑活用吧。<br></p>
+</li>
+<li><p>但是，经过上面的筛选，其实大多数病例的致病原因都是无法解释的。那么就需要我们常规的一些筛选策略了。其中首选的就是基于人群频率数据库的过滤。我们一般认为，一个变异在多数人身上存在，那这个变异应该是良性的（benign），看文献，绝大多数的方法里都有这一步。<br></p>
+</li>
+<li><p>Annovar提供了很多的人群频率数据库，那么我们怎么选呢？<br></p>
+<ul>
+<li>考虑到种族特异性，尽量选择东亚人群数据库（1000gEAS等）<br></li>
+<li>尽量选择多个数据库（1000g，ESP6500等）<br></li>
+<li>尽量选择正常人群数据库<br></li>
+<li>考虑选择大家常用的知名数据库（1000g，gnomad，ESP6500等）<br></li>
+</ul>
+</li>
+<li><p>阈值的话可以考虑5%（常见变异和稀有变异的交界），1%（很多文献都是这个值），0.5%（稀有突变和罕见突变的交界），你要说区别有多大，得看你疾病的发病率了，我们做罕见疾病，筛选到后来，基本剩下的位点的人群频率都比上面三个数小，所以区别不大。但这一步能帮你筛掉很多的变异。<br></p>
+</li>
+<li><p>保留coding是因为noncoding的变异没有很好的筛选策略，而80%的遗传病病因可以用coding区突变来解释（教科书上这么说的），所以现在做WES的很多。<br></p>
+</li>
+<li><p>通过预测软件对位点的有害性进行打分。SIFT，Polyphen，MutationTaster，CADD是我们常用的四个软件，一般说半数以上预测有害，就认为有害。当然，既然是预测软件，就存在一定的偏差，可能会漏掉一些不常规的有害变异，或者保留一些良性变异。<br></p>
+</li>
+<li><p>同义突变不改变氨基酸，但目前的研究发现，并不是说同义突变就不致病，但是对于大多数同义突变，尤其是非保守区的同义突变，我们还是认为它是良性的。<br></p>
+</li>
+<li><p>遗传模式是基于家系数据进行判断致病性的一个比较好的方式。比如，当该疾病只在患者身上有临床表现，我们就考虑纯合突变，新发突变或复合杂合突变。<br></p>
+</li>
+<li><p>同时也会着重考虑OMIM上该疾病已经报道的相关基因上的变异位点。<br></p>
+</li>
+<li><p>还有一些其他的我也没考虑到的过滤方式（欢迎大家发邮件交流补充！！！）<br></p>
+</li>
+</ul>
+<hr>
+<ul>
+<li>可能有一些朋友要问，我为什么要根据上面的条件过滤？依据又是什么？？还有什么值得注意的地方？？？有没有什么金标准？？？？<br></li>
+<li>说到金标准，还真是有的。<br></li>
+<li>2015年的时候，由美国医学遗传学与基因组学学会(The American College of Medical Genetics and Genomics, ACMG)，分子病理协会(the Association for Molecular Pathology, AMP)和美国病理学家协会(the College of American<br>Pathologists, CAP)的代表撰写修订了序列变异解读的标准和指南，发表在nature子刊GIM上，指南原文<a href="https://www.acmg.net/docs/Standards_Guidelines_for_the_Interpretation_of_Sequence_Variants.pdf" target="_blank" rel="noopener">在这里</a>能看到，当然也可以去GIM上搜。<br></li>
+<li>对于遗传专业术语不太了解的同学，可能在解读原版指南的时候很痛苦。那也不用怕，在该指南发布后，国内外超过30家单位的几十位业界大佬共同翻译了该指南，链接在<a href="http://acmg.cbgc.org.cn/doku.php" target="_blank" rel="noopener">这里</a>，这样至少在解读上轻松了一半。<br></li>
+<li>在解读完该指南后，你就会发现，上述筛选条件，基本都有指南的影子。毕竟该指南是号称可直接应用于临床，所以理解该指南对于变异的筛选还是很有帮助的。<br></li>
+<li>但问题也是有的，以下所列都是个人观点，若是理解不当望指出：<br><ul>
+<li>临床是临床，科研是科研，临床和科研的目的是不一样的，如果全用这套指南去科研，怕是很难找出新的位点或基因。<br></li>
+<li>该指南甚是全面了，但是很多证据的解读，不同的人怕是存在分歧的。<br></li>
+<li>该指南在理解上可能不是很难，但实际去判断就存在很大的困难了。<br></li>
+<li>2017年的时候annovar的作者王凯大神根据指南写了一个软件InterVar，发表在AJHG上，原文链接在<a href="https://www.sciencedirect.com/science/article/pii/S0002929717300046?via%3Dihub" target="_blank" rel="noopener">这里</a>，软件挂在github上，链接在<a href="https://github.com/WGLab/InterVar" target="_blank" rel="noopener">这里</a>，网页版软件的链接在<a href="http://wintervar.wglab.org/" target="_blank" rel="noopener">这里</a>，结果文件intervar_20180118在annovar上直接可以下载，方法可参考我之前的<a href="https://tongshiyuan.github.io/2019/06/18/WGS分析笔记%EF%BC%885%EF%BC%89-%20annotation/">文章</a>。只能说大神不愧是大神，真是一件喜大普奔的事情。但是存在一些问题：<br><ul>
+<li>由于版权问题，作者用到的结果是基于Clinvar而不是HGDM<br></li>
+<li>由于不同的疾病本身存在的特异性，加之指南有些证据难以通过软件进行判断，intervar一些证据是默认为False的，需要手动判断<br></li>
+<li>网页版intervar虽然能手动较为直观的设定特异性参数，但是不利于批量判断，且不含indel信息<br></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>本着加深学习的目的，我决定逐条解读这些证据（共28个证据，16个角度）。本来想自己一个人这么做的，发现难度不小，有些证据我真的很难正确的解读，想组队讨论，又找不到又闲又感兴趣的（身边做这个的人太少啦，所以特别希望能有人一起交流讨论）。所以就打算写成系列文章挂出来，接受广大人民群众的diss。</li>
+<li>我会基于中文版ACMG指南，参考InterVar文章和源码，较为详细的解读每一个证据（flag是立下来了，督促自己！），然后尽量重构Intervar。最后参考<a href="https://www.nature.com/articles/gim201737" target="_blank" rel="noopener">Sherloc: a comprehensive refinement of the ACMG–AMP variant classification criteria</a>（基于指南的分析框架，让指南更便于实现）进行调整。</li>
+</ul>
+<hr>
+<p>水平有限，要是存在什么错误请评论指出，可发送邮件至<a href="mailto:shiyuant@outlook.com" target="_blank" rel="noopener">shiyuant@outlook.com</a>！请大家多多批评指正，相互交流，共同成长，谢谢！！！</p>
 
       
     </div>
 
+    
+
+    
+    
+    
+
+    <div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+  
+</div>
+    <div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <p><span>本文标题:</span><a href="/2019/06/21/ACMG指南解读笔记（0）- 定个小目标/">ACMG指南解读笔记（0）- 定个小目标</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 TongShiyuan 的个人博客">TongShiyuan</a></p>
+  <p><span>发布时间:</span>2019年06月21日 - 16:06</p>
+  <p><span>最后更新:</span>2019年06月21日 - 22:06</p>
+  <p><span>原始链接:</span><a href="/2019/06/21/ACMG指南解读笔记（0）- 定个小目标/" title="ACMG指南解读笔记（0）- 定个小目标">http://tongshiyuan.github.io/2019/06/21/ACMG指南解读笔记（0）- 定个小目标/</a>
+    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://tongshiyuan.github.io/2019/06/21/ACMG指南解读笔记（0）- 定个小目标/" aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    $(".fa-clipboard").click(function(){
+      clipboard.on('success', function(){
+        swal({   
+          title: "",   
+          text: '复制成功',
+          icon: "success", 
+          showConfirmButton: true
+          });
+    });
+    });  
+</script>
+
+      
+    </div>
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/ACMG/" rel="tag"># ACMG</a>
+          
+            <a href="/tags/生信/" rel="tag"># 生信</a>
+          
+            <a href="/tags/WGS/" rel="tag"># WGS</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/18/fastqc的线程与速度测试/" rel="next" title="fastqc的线程与速度测试">
+                <i class="fa fa-chevron-left"></i> fastqc的线程与速度测试
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+  </div>
 
 
           </div>
           
+
+  
+
+
 
         </div>
         
@@ -936,6 +1001,10 @@
 
 
   
+  <script src="/js/scrollspy.js?v=7.1.2"></script>
+<script src="/js/post-details.js?v=7.1.2"></script>
+
+
 
   
 
@@ -951,6 +1020,8 @@
 
   
 
+
+  
 
 
   

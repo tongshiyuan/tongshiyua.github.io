@@ -375,6 +375,211 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://tongshiyuan.github.io/2019/06/22/ACMG指南解读笔记（1）- PVS1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="TongShiyuan">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/logo.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Taro">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/06/22/ACMG指南解读笔记（1）- PVS1/" class="post-title-link" itemprop="url">ACMG指南解读笔记（1）- PVS1</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-06-22 20:06:34 / 修改时间：23:34:28" itemprop="dateCreated datePublished" datetime="2019-06-22T20:06:34+08:00">2019-06-22</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/我的WGS之ACMG解读/" itemprop="url" rel="index"><span itemprop="name">我的WGS之ACMG解读</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>​    白纸黑字，还有中文版，其实也没啥好看不懂的，读懂它理解它并没有那么难，而我想的是怎么去实现它，限于本人专业水平有限，若有错误还请包容。<br></p>
+<p>​    解读的多数内容基于ANNOVAR的注释！！！<br></p>
+<hr>
+<ul>
+<li>原文不贴了，大体的意思我理解的就是，这个突变导致基因功能完全被破坏，那么就定义为PVS1（pathogenic very strong ，这里的数字不代表等级，只是表示序号，以示区分），同时指南也提了几个注意的点。<br></li>
+<li>既然想要脚本实现，那么比较直观的方法就是流程图了，下面直接贴出这个证据实现的流程图：<br></li>
+</ul>
+<p><img src="/2019/06/22/ACMG指南解读笔记（1）- PVS1/pvs1.jpg" alt="原文理解图"></p>
+<ul>
+<li><p>这是基于InterVar源码理出来的逻辑图<br></p>
+</li>
+<li><p>来理解一下：<br></p>
+<ul>
+<li>frameshift，stopgain包含了指南中的无义突变、移码突变，说明一下，源码中还有‘nonsense’，但是该词条在ANNOVAR注释结果中是没有的（InterVar的筛选是基于ANNOVAR的），‘stopgain’可认为是‘nonsense’；同时“起始密码子变异”这一类变异在ANNOVAR中也是没有的，起始密码子在真核生物中可以认为只有AUG一种，如果发生变异了，只有一种情况，就是无法转录了，这种情况2/3能被检测出来并标为”exonic,splicing”，毕竟起始密码子就在RNA剪切位点上；“单个或多个外显子缺失”可以包含在上一种情况里；还有一个问题就是论文中作者提到了stop_less，但是在源码中似乎没有体现。<br></li>
+<li>第二点就是要判断这些变异会不会导致功能丧失，这一点直接判断是很不好判断的，InterVar的做法是对ClinVar数据进行处理，挑出存在于MedGen数据库中的相关变异，过滤掉高频变异（频率大于5%）以及一些结果矛盾的变异。最后挑出的基因列表里，每个gene中至少有一个变异在Clinvar中为“pathogenic”，并与ExAC对<a href="https://www.nature.com/articles/nature19057" target="_blank" rel="noopener">LOF容忍度打分</a>很低的基因取了并集，最后得到了这么一个list（挂在github上了）。<br></li>
+<li>第三点，如果是在经典的剪接位点发生突变，这一点判断方法，主要是基于dbscSNV的打分来判断的，阈值是0.6，数据库在ANNOVAR上直接可以下载。<br></li>
+<li>同时指南有几个附加注意点：<br><ul>
+<li>第一点我的解读就是判断某些突变的特异性，比如只有杂合错义突变时才致病, 而杂合无功能变异却是良性的，这个例子本身就是很特殊的，如果真碰到这个情况，且这种情况已知，那么一开始就可以特异性找出来或筛掉相关变异，如果一开始不知道，这一步也只是让某些变异有害性增强，在复查的时候也可以筛掉，所以影响不大。<br></li>
+<li>第二点主要体现在对于exon的选取，作者筛掉了在第一和最后一个exon上的变异，并在下一步过滤了倒数第二个exon（InterVar提供了相关列表，挂在github上了）上靠近3‘端50bp的变异，这里不太明白的是为什么要筛掉第一个exon上的变异，指南中似乎没有提到相关的要求，而InterVar论文中也没有相关说明。<br></li>
+<li>第三点的一部分通过dbscSNV体现，其余的无法比较好的直接判断，所以没有体现，第四点，第五点同理，不好判断。<br></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>从上面的分析可以得到，对于ACMG指南，解读和判断经常是很难面面俱到的，有些时候只能尽量通过一些方法来辅助判断，但是在使用这些辅助手段的时候就要慎重，辅助手段本身是存在一定的偏差的。<br></p>
+</li>
+<li><p>总结一下我的问题和我觉得可以改进的地方：<br></p>
+<ol>
+<li>起始密码子第三个碱基发生突变的时候，这种情况InterVar是如何考虑的，不知道是我没看明白还是InterVar没有考虑到，如果是后者，那么就可以针对改进了（即使这种情况可能性可能很低）。<br></li>
+<li>stop_less这种变异是不是可能会造成功能丧失，作者论文中提到了，从我的逻辑来说应该是不太可能会的。<br></li>
+<li>功能缺失基因列表如果能采用Clinvar结合HGMD，那么应该能更准确一点，这一点有条件的小伙伴完全可以考虑一下，更新list的。<br></li>
+<li>不太明白为什么要过滤掉第一个exon上的变异。<br></li>
+</ol>
+</li>
+<li><p>以上问题非常欢迎各位交流指导！！！</p>
+</li>
+</ul>
+<hr>
+<p>水平有限，要是存在什么错误请指出，可发送邮件至<a href="mailto:shiyuant@outlook.com" target="_blank" rel="noopener">shiyuant@outlook.com</a>！请大家多多批评指正，相互交流，共同成长，谢谢！！！<br></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    <div>
+  
+</div>
+    <div>
+      
+    </div>
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://tongshiyuan.github.io/2019/06/21/ACMG指南解读笔记（0）- 定个小目标/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -420,12 +625,24 @@
                 
               
 
-              <time title="创建时间：2019-06-21 16:49:41 / 修改时间：22:47:30" itemprop="dateCreated datePublished" datetime="2019-06-21T16:49:41+08:00">2019-06-21</time>
+              <time title="创建时间：2019-06-21 16:49:41" itemprop="dateCreated datePublished" datetime="2019-06-21T16:49:41+08:00">2019-06-21</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-06-22 23:34:41" itemprop="dateModified" datetime="2019-06-22T23:34:41+08:00">2019-06-22</time>
               
             
           </span>
@@ -546,11 +763,11 @@
 </li>
 </ul>
 </li>
-<li>本着加深学习的目的，我决定逐条解读这些证据（共28个证据，16个角度）。本来想自己一个人这么做的，发现难度不小，有些证据我真的很难正确的解读，想组队讨论，又找不到又闲又感兴趣的（身边做这个的人太少啦，所以特别希望能有人一起交流讨论）。所以就打算写成系列文章挂出来，接受广大人民群众的diss。</li>
-<li>我会基于中文版ACMG指南，参考InterVar文章和源码，较为详细的解读每一个证据（flag是立下来了，督促自己！），然后尽量重构Intervar。最后参考<a href="https://www.nature.com/articles/gim201737" target="_blank" rel="noopener">Sherloc: a comprehensive refinement of the ACMG–AMP variant classification criteria</a>（基于指南的分析框架，让指南更便于实现）进行调整。</li>
+<li>本着加深学习的目的，我决定逐条解读这些证据（共28个证据，16个角度）。本来想自己一个人这么做的，发现难度不小，有些证据我真的很难正确的解读，想组队讨论，又找不到又闲又感兴趣的（身边做这个的人太少啦，所以特别希望能有人一起交流讨论）。所以就打算写成系列文章挂出来，接受广大人民群众的diss。<br></li>
+<li>我会基于中文版ACMG指南，参考InterVar文章和源码，较为详细的解读每一个证据（flag是立下来了，督促自己！），然后尽量重构Intervar。最后参考<a href="https://www.nature.com/articles/gim201737" target="_blank" rel="noopener">Sherloc: a comprehensive refinement of the ACMG–AMP variant classification criteria</a>（基于指南的分析框架，让指南更便于实现）进行调整。<br></li>
 </ul>
 <hr>
-<p>水平有限，要是存在什么错误请评论指出，可发送邮件至<a href="mailto:shiyuant@outlook.com" target="_blank" rel="noopener">shiyuant@outlook.com</a>！请大家多多批评指正，相互交流，共同成长，谢谢！！！</p>
+<p>水平有限，要是存在什么错误请指出，可发送邮件至<a href="mailto:shiyuant@outlook.com" target="_blank" rel="noopener">shiyuant@outlook.com</a>！请大家多多批评指正，相互交流，共同成长，谢谢！！！<br></p>
 
           
         
@@ -658,12 +875,24 @@
                 
               
 
-              <time title="创建时间：2019-06-18 13:49:45 / 修改时间：13:58:24" itemprop="dateCreated datePublished" datetime="2019-06-18T13:49:45+08:00">2019-06-18</time>
+              <time title="创建时间：2019-06-18 13:49:45" itemprop="dateCreated datePublished" datetime="2019-06-18T13:49:45+08:00">2019-06-18</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-06-22 23:34:50" itemprop="dateModified" datetime="2019-06-22T23:34:50+08:00">2019-06-22</time>
               
             
           </span>
@@ -724,7 +953,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ time fastqc -o allout1/ -t 1 *.fq.gz</span><br><span class="line">$ time fastqc -o allout6/ -t 6 *.fq.gz</span><br><span class="line">$ time fastqc -o allout12/ -t 12 *.fq.gz</span><br></pre></td></tr></table></figure>
 
 <p>&emsp;&emsp;结果如下：<br><br><img src="/2019/06/18/fastqc的线程与速度测试/8.png" alt="12线程"><br><img src="/2019/06/18/fastqc的线程与速度测试/9.png" alt="6线程"><br><img src="/2019/06/18/fastqc的线程与速度测试/10.png" alt="1线程"></p>
-<p>&emsp;&emsp;我想大家已经看出来了，对于单个样本，fastqc每增加一个线程并不改变运行速度，但是对于多个输入文件，每增加一个线程会多并行跑一个输入文件，就是说，比如输入四个文件，四线程会同时跑四个文件，单线程只能一个一个跑。<br><br>&emsp;&emsp;能得到一个结论还是挺开心的，那么以后在fastqc线程选择的时候也就知道多少的线程数是有必要的。<br><br>&emsp;&emsp;水平有限，要是存在什么错误请评论指出，可发送邮箱至<a href="mailto:shiyuant@outlook.com" target="_blank" rel="noopener">shiyuant@outlook.com</a>！请大家多多批评指正，相互交流，共同成长，谢谢！！！<br></p>
+<p>&emsp;&emsp;我想大家已经看出来了，对于单个样本，fastqc每增加一个线程并不改变运行速度，但是对于多个输入文件，每增加一个线程会多并行跑一个输入文件，就是说，比如输入四个文件，四线程会同时跑四个文件，单线程只能一个一个跑。<br><br>&emsp;&emsp;能得到一个结论还是挺开心的，那么以后在fastqc线程选择的时候也就知道多少的线程数是有必要的。<br><br>&emsp;&emsp;水平有限，要是存在什么错误请指出，可发送邮箱至<a href="mailto:shiyuant@outlook.com" target="_blank" rel="noopener">shiyuant@outlook.com</a>！请大家多多批评指正，相互交流，共同成长，谢谢！！！<br></p>
 
           
         
@@ -832,12 +1061,24 @@
                 
               
 
-              <time title="创建时间：2019-06-18 12:52:03 / 修改时间：13:45:05" itemprop="dateCreated datePublished" datetime="2019-06-18T12:52:03+08:00">2019-06-18</time>
+              <time title="创建时间：2019-06-18 12:52:03" itemprop="dateCreated datePublished" datetime="2019-06-18T12:52:03+08:00">2019-06-18</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-06-22 23:35:44" itemprop="dateModified" datetime="2019-06-22T23:35:44+08:00">2019-06-22</time>
               
             
           </span>
@@ -934,7 +1175,7 @@
 <p><img src="/2019/06/18/WGS分析笔记（5）- annotation/7.png" alt="--splicing_threshold"></p>
 <p>&emsp;&emsp;里面在调用<code>annotate_variation.pl</code>的时候，直接给了<code>--splicing_threshold</code>这个参数，只要把后面的数字改成50就好了（原来是2）。至于怎么建立索引可以参考<a href="https://mp.weixin.qq.com/s/_h-EkT9YvffSOuViYT_gGQ" target="_blank" rel="noopener">这里</a>，是否建立索引会影响注释速度，但不会影响结果。<br><br>&emsp;&emsp;至此，这一部分内容就完了，我在实践中也就是这么使用的，具体的根据需要可以好好读一读annovar的官网说明。<br></p>
 <hr>
-<p>&emsp;&emsp;水平有限，要是存在什么错误请评论指出，可发送邮件至<a href="mailto:shiyuant@outlook.com" target="_blank" rel="noopener">shiyuant@outlook.com</a>！请大家多多批评指正，相互交流，共同成长，谢谢！！！</p>
+<p>&emsp;&emsp;水平有限，要是存在什么错误请指出，可发送邮件至<a href="mailto:shiyuant@outlook.com" target="_blank" rel="noopener">shiyuant@outlook.com</a>！请大家多多批评指正，相互交流，共同成长，谢谢！！！</p>
 <h3 id="附（vep安装笔记）"><a href="#附（vep安装笔记）" class="headerlink" title="附（vep安装笔记）"></a>附（vep安装笔记）</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">#由于我用的是ubuntu server 18.04，不同linux发行版本之间的安装可能存在差异</span><br><span class="line">	$ git clone https://github.com/Ensembl/ensembl-vep.git</span><br><span class="line">	$ cd ensembl-vep</span><br><span class="line">	$ perl -MCPAN -e shell</span><br><span class="line">	$ cpan&gt;install DBI</span><br><span class="line">	$ cpan&gt;install Bio::DB::HTS</span><br><span class="line">	$ cpan&gt;install LWP::Simple </span><br><span class="line">	$ cpan&gt;install LWP::Protocol::https</span><br><span class="line">	$ cpan&gt;install Archive::Extract</span><br><span class="line">	$ cpan&gt;install Archive::Tar</span><br><span class="line">	$ cpan&gt;install Archive::Zip</span><br><span class="line">	$ cpan&gt;install CGI</span><br><span class="line">	$ cpan&gt;install Time::HiRes</span><br><span class="line">	$ cpan&gt;install DBD::mysql</span><br><span class="line">	$ cpan&gt;q</span><br><span class="line">	$ sudo apt-get install libdbd-mysql-perl</span><br><span class="line">	$ perl INSTALL.pl</span><br><span class="line">	$ perl INSTALL.pl --AUTO af --SPECIES homo_sapiens --ASSEMBLY GRCh37 --DESTDIR /your/path/of/vepdatabase/ --CACHEDIR /your/path/of/vepdatabase/</span><br><span class="line">	$ perl convert_cache.pl --species homo_sapiens --version 94_GRCh37 --dir /your/path/of/vepdatabase/</span><br></pre></td></tr></table></figure>
           
         
@@ -1042,12 +1283,24 @@
                 
               
 
-              <time title="创建时间：2019-06-18 12:51:38 / 修改时间：13:42:33" itemprop="dateCreated datePublished" datetime="2019-06-18T12:51:38+08:00">2019-06-18</time>
+              <time title="创建时间：2019-06-18 12:51:38" itemprop="dateCreated datePublished" datetime="2019-06-18T12:51:38+08:00">2019-06-18</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-06-22 23:35:33" itemprop="dateModified" datetime="2019-06-22T23:35:33+08:00">2019-06-22</time>
               
             
           </span>
@@ -1137,7 +1390,7 @@
 
 <p>&emsp;&emsp;这样，多等位位点就变成了二等位位点了，便于后续的分析。今天的内容就到这里了，下一篇就是注释以及各种过滤了。<br></p>
 <hr>
-<p>&emsp;&emsp;水平有限，要是存在什么错误请评论指出，可发送邮件至<a href="mailto:shiyuant@outlook.com" target="_blank" rel="noopener">shiyuant@outlook.com</a>！请大家多多批评指正，相互交流，共同成长，谢谢！！！<br></p>
+<p>&emsp;&emsp;水平有限，要是存在什么错误请指出，可发送邮件至<a href="mailto:shiyuant@outlook.com" target="_blank" rel="noopener">shiyuant@outlook.com</a>！请大家多多批评指正，相互交流，共同成长，谢谢！！！<br></p>
 
           
         
@@ -1245,12 +1498,24 @@
                 
               
 
-              <time title="创建时间：2019-06-18 12:50:51 / 修改时间：13:11:52" itemprop="dateCreated datePublished" datetime="2019-06-18T12:50:51+08:00">2019-06-18</time>
+              <time title="创建时间：2019-06-18 12:50:51" itemprop="dateCreated datePublished" datetime="2019-06-18T12:50:51+08:00">2019-06-18</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-06-22 23:35:25" itemprop="dateModified" datetime="2019-06-22T23:35:25+08:00">2019-06-22</time>
               
             
           </span>
@@ -1435,7 +1700,7 @@
 </li>
 <li><p>上图我按不同的染色体进行统计覆盖率，去掉了其余的一些未知染色体位置的序列上的信息（这个信息具体要了解参考基因组的特性，比如有些序列目前能明确在人身上，却不知道具体在哪个染色体等，这些信息也是包含在参考基因组中的，仔细看参考基因组会发现，除了22条常染色体，2条性染色体，还有很多其他的序列），这个覆盖率并不是我想想的那般全体高于99%，也没公司给的报告描述的那么好，主要是因为MAPQ的过滤导致了这样的结果，但是总体的覆盖率还可以。</p>
 </li>
-<li><p>水平有限，要是存在什么错误请评论指出，可发送邮件至<a href="mailto:shiyuant@outlook.com" target="_blank" rel="noopener">shiyuant@outlook.com</a>！请大家多多批评指正，相互交流，共同成长，谢谢！！！</p>
+<li><p>水平有限，要是存在什么错误请指出，可发送邮件至<a href="mailto:shiyuant@outlook.com" target="_blank" rel="noopener">shiyuant@outlook.com</a>！请大家多多批评指正，相互交流，共同成长，谢谢！！！</p>
 </li>
 </ul>
 
@@ -1545,12 +1810,24 @@
                 
               
 
-              <time title="创建时间：2019-06-18 11:10:20 / 修改时间：12:53:49" itemprop="dateCreated datePublished" datetime="2019-06-18T11:10:20+08:00">2019-06-18</time>
+              <time title="创建时间：2019-06-18 11:10:20" itemprop="dateCreated datePublished" datetime="2019-06-18T11:10:20+08:00">2019-06-18</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-06-22 23:35:17" itemprop="dateModified" datetime="2019-06-22T23:35:17+08:00">2019-06-22</time>
               
             
           </span>
@@ -1680,7 +1957,7 @@
 </li>
 <li><p>但是回归主题，bwa和bowtie2，我决定选择bwa。<br></p>
 </li>
-<li><p>水平有限，要是存在什么错误请评论指出，可发送邮件至<a href="mailto:shiyuant@outlook.com" target="_blank" rel="noopener">shiyuant@outlook.com</a>！请大家多多批评指正，相互交流，共同成长，谢谢！！！<br></p>
+<li><p>水平有限，要是存在什么错误请指出，可发送邮件至<a href="mailto:shiyuant@outlook.com" target="_blank" rel="noopener">shiyuant@outlook.com</a>！请大家多多批评指正，相互交流，共同成长，谢谢！！！<br></p>
 </li>
 </ul>
 
@@ -1790,12 +2067,24 @@
                 
               
 
-              <time title="创建时间：2019-06-18 00:23:29 / 修改时间：11:02:33" itemprop="dateCreated datePublished" datetime="2019-06-18T00:23:29+08:00">2019-06-18</time>
+              <time title="创建时间：2019-06-18 00:23:29" itemprop="dateCreated datePublished" datetime="2019-06-18T00:23:29+08:00">2019-06-18</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-06-22 23:35:10" itemprop="dateModified" datetime="2019-06-22T23:35:10+08:00">2019-06-22</time>
               
             
           </span>
@@ -2010,7 +2299,7 @@
 <ul>
 <li>看到结果，其实可以发现，数据还是保留了大部分的，所以完全不用担心cut太狠，导致数据不够。我的原则是，在数据量面前，更应该保证的是数据的准确性，即使会有一点损失，也是值得的，毕竟research更注重的也是准确性，相对于降低假阴性，我更倾向于提高真阳性。<br></li>
 <li>那么得到clean data以后就可以进行下一步mapping了，mapping内容下次再与大家分享。<br></li>
-<li>水平有限，要是存在什么错误请评论指出，可发送邮箱至<a href="mailto:shiyuant@outlook.com" target="_blank" rel="noopener">shiyuant@outlook.com</a>！请大家多多批评指正，相互交流，共同成长，谢谢！！！<br></li>
+<li>水平有限，要是存在什么错误请指出，可发送邮箱至<a href="mailto:shiyuant@outlook.com" target="_blank" rel="noopener">shiyuant@outlook.com</a>！请大家多多批评指正，相互交流，共同成长，谢谢！！！<br></li>
 </ul>
 
           
@@ -2319,12 +2608,24 @@
                 
               
 
-              <time title="创建时间：2019-06-17 21:39:58 / 修改时间：22:09:37" itemprop="dateCreated datePublished" datetime="2019-06-17T21:39:58+08:00">2019-06-17</time>
+              <time title="创建时间：2019-06-17 21:39:58" itemprop="dateCreated datePublished" datetime="2019-06-17T21:39:58+08:00">2019-06-17</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-06-22 23:35:48" itemprop="dateModified" datetime="2019-06-22T23:35:48+08:00">2019-06-22</time>
               
             
           </span>
@@ -2458,7 +2759,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-count">10</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -2622,7 +2923,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共20k字</span>
+  <span class="post-count">博客全站共21.2k字</span>
 </div>
         
 <div class="busuanzi-count">

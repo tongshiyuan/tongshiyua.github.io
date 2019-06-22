@@ -103,26 +103,20 @@
 
 
 
-  <meta name="description" content="&amp;emsp;&amp;emsp; 在找到很多变异以后（本文具体指的是snv以及indel），我们需要做的就是进行注释了，这是因为无论WGS还是WES，都会call出大量的变异。即使是一个正常人，也会有百万数量级的变异（详见上一章），而我们需要做的是把其中可能有害的变异找出来。因此对于这么多的变异，就需要通过注释信息来筛选了（不同于call snv/indel以后的筛选，那是依据变异本身的可信度进行筛选的）">
-<meta name="keywords" content="生信,WGS">
+  <meta name="description" content="​    白纸黑字，还有中文版，其实也没啥好看不懂的，读懂它理解它并没有那么难，而我想的是怎么去实现它，限于本人专业水平有限，若有错误还请包容。 ​    解读的多数内容基于ANNOVAR的注释！！！   原文不贴了，大体的意思我理解的就是，这个突变导致基因功能完全被破坏，那么就定义为PVS1（pathogenic very strong ，这里的数字不代表等级，只是表示序号，以示区分），同时指南">
+<meta name="keywords" content="ACMG,生信,WGS">
 <meta property="og:type" content="article">
-<meta property="og:title" content="WGS分析笔记（5）- annotation">
-<meta property="og:url" content="http://tongshiyuan.github.io/2019/06/18/WGS分析笔记（5）- annotation/index.html">
+<meta property="og:title" content="ACMG指南解读笔记（1）- PVS1">
+<meta property="og:url" content="http://tongshiyuan.github.io/2019/06/22/ACMG指南解读笔记（1）- PVS1/index.html">
 <meta property="og:site_name" content="Taro">
-<meta property="og:description" content="&amp;emsp;&amp;emsp; 在找到很多变异以后（本文具体指的是snv以及indel），我们需要做的就是进行注释了，这是因为无论WGS还是WES，都会call出大量的变异。即使是一个正常人，也会有百万数量级的变异（详见上一章），而我们需要做的是把其中可能有害的变异找出来。因此对于这么多的变异，就需要通过注释信息来筛选了（不同于call snv/indel以后的筛选，那是依据变异本身的可信度进行筛选的）">
+<meta property="og:description" content="​    白纸黑字，还有中文版，其实也没啥好看不懂的，读懂它理解它并没有那么难，而我想的是怎么去实现它，限于本人专业水平有限，若有错误还请包容。 ​    解读的多数内容基于ANNOVAR的注释！！！   原文不贴了，大体的意思我理解的就是，这个突变导致基因功能完全被破坏，那么就定义为PVS1（pathogenic very strong ，这里的数字不代表等级，只是表示序号，以示区分），同时指南">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://tongshiyuan.github.io/2019/06/18/WGS分析笔记（5）-%20annotation/1.png">
-<meta property="og:image" content="http://tongshiyuan.github.io/2019/06/18/WGS分析笔记（5）-%20annotation/2.png">
-<meta property="og:image" content="http://tongshiyuan.github.io/2019/06/18/WGS分析笔记（5）-%20annotation/3.png">
-<meta property="og:image" content="http://tongshiyuan.github.io/2019/06/18/WGS分析笔记（5）-%20annotation/4.png">
-<meta property="og:image" content="http://tongshiyuan.github.io/2019/06/18/WGS分析笔记（5）-%20annotation/5.png">
-<meta property="og:image" content="http://tongshiyuan.github.io/2019/06/18/WGS分析笔记（5）-%20annotation/6.png">
-<meta property="og:image" content="http://tongshiyuan.github.io/2019/06/18/WGS分析笔记（5）-%20annotation/7.png">
-<meta property="og:updated_time" content="2019-06-22T15:35:44.551Z">
+<meta property="og:image" content="http://tongshiyuan.github.io/2019/06/22/ACMG指南解读笔记（1）-%20PVS1/pvs1.jpg">
+<meta property="og:updated_time" content="2019-06-22T15:34:28.766Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="WGS分析笔记（5）- annotation">
-<meta name="twitter:description" content="&amp;emsp;&amp;emsp; 在找到很多变异以后（本文具体指的是snv以及indel），我们需要做的就是进行注释了，这是因为无论WGS还是WES，都会call出大量的变异。即使是一个正常人，也会有百万数量级的变异（详见上一章），而我们需要做的是把其中可能有害的变异找出来。因此对于这么多的变异，就需要通过注释信息来筛选了（不同于call snv/indel以后的筛选，那是依据变异本身的可信度进行筛选的）">
-<meta name="twitter:image" content="http://tongshiyuan.github.io/2019/06/18/WGS分析笔记（5）-%20annotation/1.png">
+<meta name="twitter:title" content="ACMG指南解读笔记（1）- PVS1">
+<meta name="twitter:description" content="​    白纸黑字，还有中文版，其实也没啥好看不懂的，读懂它理解它并没有那么难，而我想的是怎么去实现它，限于本人专业水平有限，若有错误还请包容。 ​    解读的多数内容基于ANNOVAR的注释！！！   原文不贴了，大体的意思我理解的就是，这个突变导致基因功能完全被破坏，那么就定义为PVS1（pathogenic very strong ，这里的数字不代表等级，只是表示序号，以示区分），同时指南">
+<meta name="twitter:image" content="http://tongshiyuan.github.io/2019/06/22/ACMG指南解读笔记（1）-%20PVS1/pvs1.jpg">
 
 
 
@@ -132,7 +126,7 @@
 
   
   
-  <link rel="canonical" href="http://tongshiyuan.github.io/2019/06/18/WGS分析笔记（5）- annotation/">
+  <link rel="canonical" href="http://tongshiyuan.github.io/2019/06/22/ACMG指南解读笔记（1）- PVS1/">
 
 
 
@@ -142,7 +136,7 @@
   };
 </script>
 
-  <title>WGS分析笔记（5）- annotation | Taro</title>
+  <title>ACMG指南解读笔记（1）- PVS1 | Taro</title>
   
 
 
@@ -387,7 +381,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://tongshiyuan.github.io/2019/06/18/WGS分析笔记（5）- annotation/">
+    <link itemprop="mainEntityOfPage" href="http://tongshiyuan.github.io/2019/06/22/ACMG指南解读笔记（1）- PVS1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="TongShiyuan">
@@ -404,7 +398,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">WGS分析笔记（5）- annotation
+          <h1 class="post-title" itemprop="name headline">ACMG指南解读笔记（1）- PVS1
 
               
             
@@ -430,24 +424,12 @@
                 
               
 
-              <time title="创建时间：2019-06-18 12:52:03" itemprop="dateCreated datePublished" datetime="2019-06-18T12:52:03+08:00">2019-06-18</time>
+              <time title="创建时间：2019-06-22 20:06:34 / 修改时间：23:34:28" itemprop="dateCreated datePublished" datetime="2019-06-22T20:06:34+08:00">2019-06-22</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-06-22 23:35:44" itemprop="dateModified" datetime="2019-06-22T23:35:44+08:00">2019-06-22</time>
               
             
           </span>
@@ -464,7 +446,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/我的WGS/" itemprop="url" rel="index"><span itemprop="name">我的WGS</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/我的WGS之ACMG解读/" itemprop="url" rel="index"><span itemprop="name">我的WGS之ACMG解读</span></a></span>
 
                 
                 
@@ -506,51 +488,46 @@
       
 
       
-        <p>&emsp;&emsp; 在找到很多变异以后（本文具体指的是snv以及indel），我们需要做的就是进行注释了，这是因为无论WGS还是WES，都会call出大量的变异。即使是一个正常人，也会有百万数量级的变异（详见<a href="https://tongshiyuan.github.io/2019/06/18/WGS分析笔记%EF%BC%884%EF%BC%89-%20Call%20SNVs%20indels/">上一章</a>），而我们需要做的是把其中可能有害的变异找出来。因此对于这么多的变异，就需要通过注释信息来筛选了（不同于call snv/indel以后的筛选，那是依据变异本身的可信度进行筛选的）。<br><br>&emsp;&emsp; 对于不同的研究目的，目前用的注释软件还是不少的，有专门针对肿瘤数据的注释软件（如oncotator等），也有孟德尔遗传疾病测序数据常用的annovar、vep等。<br><br>&emsp;&emsp; 本文主要讲的是通过annovar，对vcf文件进行注释，个人觉得annovar特别好用简单，说明书也写得很好，即使是我这种看了英语头晕的人，也能看的比较明白。<br></p>
-<p>&emsp;&emsp; 比较一下annovar和vep，annovar软件是需要先申请再下载的，对于研究机构是免费的，对商业机构是收费的，只要你拿学邮去申请，应该就没有问题。而vep是免费的，但是呢，安装起来超级麻烦，本文虽然不用vep，但会在后面附上我当初安装vep的笔记。<br></p>
-<p>&emsp;&emsp;annovar很人性化的一点是，当你下载到软件以后，直接解压就能用了，不用安装。而你需要注释什么数据库，按照官网说明书的词条直接下载就行。<br><br>&emsp;&emsp;本文主要讲述我在做课题的时候是如何使用的，具体的细节可以参考<a href="http://annovar.openbioinformatics.org/en/latest/" target="_blank" rel="noopener">官网说明书</a>或者别的大神们的使用笔记。<br><br>&emsp;&emsp;首先是下载数据，annovar提供了大量的数据库，可以单独下载也可以批量下载，主要是来源于annovar自己网站以及ucsc的，你要是批量下载是完全没有必要的，因为一个数据库可能有很多的版本，也有很多数据库是你不需要的，还有一些数据库所占空间那是相当的大。举几个我常用的数据库为例（我只是举例一些，建议是看看说明书根据需要下载）。<br></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">#注释基因</span><br><span class="line">$ perl annotate_variation.pl -downdb -buildver hg19 -webfrom annovar refGene humandb/</span><br><span class="line">#注释人群频率</span><br><span class="line">$ perl annotate_variation.pl -downdb -buildver hg19 -webfrom annovar esp6500siv2_all humandb/</span><br><span class="line">$ perl annotate_variation.pl -downdb -buildver hg19 -webfrom annovar exac03 humandb/</span><br><span class="line">$ perl annotate_variation.pl -downdb -buildver hg19 -webfrom annovar gnomad_genome humandb/</span><br><span class="line">$ perl annotate_variation.pl -downdb -buildver hg19 -webfrom annovar 1000g2015aug humandb/</span><br><span class="line">$ perl annotate_variation.pl -downdb -buildver hg19 -webfrom annovar popfreq_max_20150413 humandb/</span><br><span class="line">$ perl annotate_variation.pl -downdb -buildver hg19 -webfrom annovar popfreq_all_20150413 humandb/</span><br><span class="line">#预测打分</span><br><span class="line">$ perl annotate_variation.pl -downdb -buildver hg19 -webfrom annovar mcap13 humandb/</span><br><span class="line">$ perl annotate_variation.pl -downdb -buildver hg19 -webfrom annovar revel humandb/</span><br><span class="line">$ perl annotate_variation.pl -downdb -buildver hg19 -webfrom annovar gerp++gt2 humandb/</span><br><span class="line">$ perl annotate_variation.pl -downdb -buildver hg19 -webfrom annovar cadd13 humandb/</span><br><span class="line">$ perl annotate_variation.pl -downdb -buildver hg19 -webfrom annovar dbnsfp35a humandb/</span><br><span class="line"># dbsnp</span><br><span class="line">$ perl annotate_variation.pl -downdb -buildver hg19 snp151 humandb/</span><br><span class="line">$ perl annotate_variation.pl -downdb -buildver hg19 -webfrom annovar avsnp150 humandb/</span><br><span class="line"># 致病位点公共数据库</span><br><span class="line">$ perl annotate_variation.pl -downdb -buildver hg19 gwasCatalog humandb/</span><br><span class="line">$ perl annotate_variation.pl -downdb -buildver hg19 -webfrom annovar clinvar_20190305 humandb/</span><br><span class="line">#区域注释</span><br><span class="line">$ perl annotate_variation.pl -downdb -buildver hg19 cytoBand humandb/</span><br><span class="line"># 稍微注意一下 humandb/ 是当前目录下有这么一个文件夹，用来放数据库的，这个路径关系到你用的时候的路径，你放在哪，用的时候把路径改成哪就行</span><br></pre></td></tr></table></figure>
-
-<p>&emsp;&emsp;然后是输入格式的转换，对于注释所需的输入文件，只需要前五列按照<code>avinput</code>的要求就行了，格式如下。<br></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#分别以tab分隔</span><br><span class="line">染色体位置	起始位点    终止位点    参考基因组碱基    突变碱基</span><br></pre></td></tr></table></figure>
-
-<p>&emsp;&emsp;在注释完以后是不会保留原有的五列以外的内容的，转换脚本如下：<br></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ perl convert2annovar.pl -format vcf4old in.vcf &gt; out.avinput</span><br></pre></td></tr></table></figure>
-
-<p>&emsp;&emsp;上面这个脚本除了把<code>vcf</code>转换为<code>avinput</code>以外，还会把一些多等位位点转换为单等位位点来注释，而格式之所以选用<code>vcf4old</code>，是因为我的输入格式是家系merge的vcf，一个vcf文件里有一家人的信息，如果是单个样本的话，直接用<code>vcf4</code>就行了。<br><br>&emsp;&emsp;用这种方式得到的结果就像我说的，注释完以后就没有保留 genotype等信息，除了前五列就只剩注释信息了。当然，也可以不转换格式，直接用<code>vcf</code>作为输入格式了，那么注释结果以标签的方式插入<code>vcf</code>文件之中，但是这样的话，会导致输出结果异常的占空间，因为，每一个数据库的头文件会反复出现在每一行被注释的变异中。提供参考脚本如下：<br></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 输入是vcf文件，要加上参数-vcfinput</span><br><span class="line">$ perl table_annovar.pl in.vcf /path/humandb/ -buildver hg19 -out myanno -remove -protocol refGene,cytoBand,exac03,avsnp147,dbnsfp30a -operation g,r,f,f,f -nastring . -vcfinput</span><br></pre></td></tr></table></figure>
-
-<p>&emsp;&emsp;虽然提供了这种方法，但我却是不建议的，尤其是我以WGS的文件作为输入，会使输出文件占很大的空间，但我又想保留 genotype信息，因为后面我需要这个信息判断变异的显隐性，这对于筛选是很关键的，那怎么办呢？<br><br>&emsp;&emsp;我想到的办法就是，在转换格式的时候，添加参数<code>-includeinfo</code>和<code>-comment</code>，前者的作用保留了genotype信息，后者保留了vcf的头文件。<br></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ perl convert2annovar.pl -format vcf4old in.vcf -outfile out.avinput -comment -includeinfo</span><br></pre></td></tr></table></figure>
-
-<p>&emsp;&emsp;转换完格式就是注释了，虽然annovar提供了多种注释方式，但是我们一般都是批量注释，即像上面那个注释的例子一样，下面来简单说一下怎么批量注释。<br></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ table_annovar.pl out.avinput /your/path/of/humandb/ \</span><br><span class="line">	--buildver hg19 -out /your/path/of/outfile -remove \</span><br><span class="line">	-protocol refGene,cytoBand,EAS.sites.2015_08,ALL.sites.2015_08,kaviar_20150923,hrcr1,cg69,gnomad_genome,exac03,exac03nonpsych,esp6500siv2_all,cg46 \</span><br><span class="line">	-operation g,r,f,f,f,f,f,f,f,f,f,f \</span><br><span class="line">	-nastring . --thread 12</span><br></pre></td></tr></table></figure>
-
-<p>&emsp;&emsp;来详细说一下我这个脚本有什么需要注意的地方，而我又是怎么应用于实际课题中的。<br><br>&emsp;&emsp;首先是out.avinput，就是上面转换之后的输出文件；之后跟着的就是我们下载数据库的目录；我用的是hg19的参考基因组；<code>-out</code>是输出文件的路径和输出文件的前缀；<code>-remove</code>表示删除注释过程中的临时文件;<code>-protocol</code>表示注释使用的数据库，用逗号隔开；<code>-operation</code> 表示对应顺序的数据库的类型（g代表gene-based、r代表region-based、f代表filter-based，可对照说明书），用逗号隔开，与<code>-protocol</code>顺序一一对应；<code>-nastring</code> 表示用点号替代缺省的值。<br><br>&emsp;&emsp;annovar其实提供了好多个<code>gene-based</code>数据库下载，refGene是NCBI提供的，还有ensembl、UCSC提供的ensGene、knowGene，这三个数据库是有所差别的，至于怎么选择，建议就和使用的参考基因组来源一致即可，比如我用的是NCBI上下载的参考基因组，那么就用refGene。<br><br>&emsp;&emsp;<code>-csvout</code> 表示最后输出.csv文件，使用这个参数得到的是csv格式的文件，可以直接用excel打开，但是我没有使用，输出是tab分隔的txt文件，方便后续我写脚本处理。为什么“,”分隔的csv文件不适合处理呢？那是因为refgene的注释结果也是逗号分隔的，在分析的时候就会出现问题。<br><br>&emsp;&emsp;<code>--thread</code>是线程数，当然线程数越高注释速度越快。<br><br>&emsp;&emsp;到了这一步以后，其实结果还是前五列avinput的内容，后面是注释的内容，genotype的信息还是没有掉了，这个时候就加一步，来解决一下这个问题。<br></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ grep -v &quot;##&quot; out.avinput | cut -f1-9 --complement &gt; gt.txt</span><br><span class="line">$ paste hg19_multianno.txt gt.txt &gt; merge.anno.txt</span><br></pre></td></tr></table></figure>
-
-<p>&emsp;&emsp;很简单的两行命令，第一行提取了avinput文件里的genotype信息，然后第二行merge这个信息到注释完的文件上。这样得到的结果呢，又有注释信息，又有genotype信息，就很方便进行trio分析。<br><br>&emsp;&emsp;到这里其实就差不多了，可以进行下一步的筛选了，但是实际情况中，我们用到的数据库可能不止annovar提供的这些。毕竟annovar提供的数据库都是公开的数据库，而且对于日新月异的预测数据库等，annovar作者也不能做到每一种都去收录，如果你有一些自己下载的数据库，你该怎么利用annovar去注释呢？<br><br>&emsp;&emsp;这一类的数据库很多，比如omim需要申请才能下载，HGMD专业版需要付费订阅，这些annovar都是没有提供的。但是这些数据库在孟德尔遗传疾病中是很具有参考价值的，由于这两个都不能直接下载获得，这里也不详述，以两个近期发表在Nature Genetic上的公开的预测数据库为例，简述一下简单的方法构建自己的数据库。<br><br>&emsp;&emsp;annovar注释变异有两种注释方式，一个是基于区域，一个是基于位点，<a href="https://www.nature.com/articles/s41588-018-0294-6" target="_blank" rel="noopener">CCRS</a>就是一个基于区域的有害性预测打分工具，其数据可在这里下载，分为<a href="https://s3.us-east-2.amazonaws.com/ccrs/ccrs/ccrs.autosomes.v2.20180420.bed.gz" target="_blank" rel="noopener">常染色体</a>和<a href="https://s3.us-east-2.amazonaws.com/ccrs/ccrs/ccrs.xchrom.v2.20180420.bed.gz" target="_blank" rel="noopener">X染色体</a>；<a href="https://www.nature.com/articles/s41588-019-0348-4" target="_blank" rel="noopener">S-CAP</a>就是一个基于位点的splicing 区域有害性预测工具，其数据可以在<a href="http://bejerano.stanford.edu/scap/" target="_blank" rel="noopener">这里</a>下载。<br></p>
-<h5 id="CCRS"><a href="#CCRS" class="headerlink" title="CCRS"></a>CCRS</h5><p>&emsp;&emsp;由于是基于区域的，那么在<code>-operation</code>参数里面呢是<code>r</code>，然后呢从网上下载下来的是一个bed文件，截取前十行，长这样。<br></p>
-<p><img src="/2019/06/18/WGS分析笔记（5）- annotation/1.png" alt="ccrs"></p>
-<p>&emsp;&emsp;这些信息其实我们只需要ccr_pct这一列的打分，为了方便起见，完全可以只保留前四列的内容，不然注释完会把所有前三列以后的内容都加到注释结果文件里。<br><br>&emsp;&emsp;那么这么一个文件是不能直接拿来用的，第一步就是改名。下载过annovar提供的数据库后可以知道，annovar使用的数据库都有自己的命名方式，这里的话直接改成 <code>hg19_ccrs.txt</code>即可，<code>hg19</code>表示所使用的参考基因组版本，因为CCRS 的坐标是基于hg19的，所以这里是hg19，ccrs就是<code>-protocol</code>参数里的标识符了，然后以<code>.txt</code>作为后缀。<br><br>&emsp;&emsp;然后是修改格式，一开始我用的方法是参考annovar提供的<code>region-based</code>数据库的格式，然后修改CCRS的格式。后来我发现这是行不通的，因为现成的数据库格式差别有点大，那么就只能看源码了。但其实我是不会perl的，在师姐的帮助下，完美的解决了这个问题。<br><br>&emsp;&emsp;虽然我们是使用<code>table_annovar.pl</code>进行注释的，实际上对于<code>region-based</code>数据库的注释是调用<code>annotate_variation.pl</code>，所以需要修改<code>annotate_variation.pl</code>的源码。在2998行我们可以看到，其实对于不同<code>region-based</code>数据库，都是有预设的。<br></p>
-<p><img src="/2019/06/18/WGS分析笔记（5）- annotation/2.png" alt="annotate_variation.pl"></p>
-<p>&emsp;&emsp;所以根据CCRS的格式，我们可以在这里添加一个预设语句块。<br></p>
-<p><img src="/2019/06/18/WGS分析笔记（5）- annotation/3.png" alt="ccrs预设"></p>
-<p>&emsp;&emsp;当然也可以根据最后一个<code>else语句块</code>修改CCRS的格式<br></p>
-<p><img src="/2019/06/18/WGS分析笔记（5）- annotation/4.png" alt="else语句块"></p>
-<p>&emsp;&emsp;从这个语句块可以看出来，只需要在CCRS原始文件前面添加一列内容，以<code>tab</code>隔开，就行，添加啥也都无所谓，这里就不赘述了。<br></p>
-<h5 id="S-CAP"><a href="#S-CAP" class="headerlink" title="S-CAP"></a>S-CAP</h5><p>&emsp;&emsp;由于是基于位点的，那么在<code>-operation</code>参数里面呢是<code>f</code>，然后呢从网上下载下来的文件，一共有八个文件（不同区域不同标准，可以参考论文），任意选取一个截取前十行，长这样。<br></p>
-<p><img src="/2019/06/18/WGS分析笔记（5）- annotation/5.png" alt="S-CAP"></p>
-<p>&emsp;&emsp;这里我已经把名字修改了，如果大家有查看过<code>filter-based</code>数据库，大抵都是这个格式，染色染位置、起始位置、结束位置、参考碱基、突变碱基、要注释的内容（可以是多列），以<code>tab</code>隔开。这里可以发现，少了一列结束位置，那是因为论文只针对snp，所以不用start、end表示也可以，这里用一个简单的语句就可以解决这一点。<br></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk -F &quot;\t&quot; &apos;&#123;print $1&quot;\t&quot;$2&quot;\t&quot;$2&quot;\t&quot;$3&quot;\t&quot;$4&quot;\t&quot;$5&#125;&apos; scap3cr.txt &gt; hg19_scap3cr.txt</span><br></pre></td></tr></table></figure>
-
-<p>&emsp;&emsp;但是注意，这样是不够的，如果你看了这个论文，你会发现，这是预测splicing区域有害性的打分，更重要的是，论文中对splicing区域的划分和annovar默认的aplicing区域是不一样的！！！<br><br>&emsp;&emsp;在annovar里头，splicing的区域是2bp，也就是图中的1和4.<br></p>
-<p><img src="/2019/06/18/WGS分析笔记（5）- annotation/6.png" alt="splicing"><br>&emsp;&emsp;但是论文中作者为了更好的预测有害性，用了整整100bp的长度（内含子外显子各50bp），所以仅仅用annovar默认的splicing区域大小就太浪费这个打分了，那怎么扩大这个范围呢？<br><br>&emsp;&emsp;其实如果仔细看annovar说明书我们会发现，在<code>annotate_variation.pl</code>的脚本中有一个参数<code>--splicing_threshold</code>，可以控制splicing的区域大小，默认是2，但是我们用的是<code>table_annovar.pl</code>的脚本进行注释，虽然是调用<code>annotate_variation.pl</code>，但是却没有了<code>--splicing_threshold</code>这个参数，看来又只能改源码了。<br><br>&emsp;&emsp;在<code>table_annovar.pl</code>第380行（不同版本可能不太一样），有这么一句话。<br></p>
-<p><img src="/2019/06/18/WGS分析笔记（5）- annotation/7.png" alt="--splicing_threshold"></p>
-<p>&emsp;&emsp;里面在调用<code>annotate_variation.pl</code>的时候，直接给了<code>--splicing_threshold</code>这个参数，只要把后面的数字改成50就好了（原来是2）。至于怎么建立索引可以参考<a href="https://mp.weixin.qq.com/s/_h-EkT9YvffSOuViYT_gGQ" target="_blank" rel="noopener">这里</a>，是否建立索引会影响注释速度，但不会影响结果。<br><br>&emsp;&emsp;至此，这一部分内容就完了，我在实践中也就是这么使用的，具体的根据需要可以好好读一读annovar的官网说明。<br></p>
+        <p>​    白纸黑字，还有中文版，其实也没啥好看不懂的，读懂它理解它并没有那么难，而我想的是怎么去实现它，限于本人专业水平有限，若有错误还请包容。<br></p>
+<p>​    解读的多数内容基于ANNOVAR的注释！！！<br></p>
 <hr>
-<p>&emsp;&emsp;水平有限，要是存在什么错误请指出，可发送邮件至<a href="mailto:shiyuant@outlook.com" target="_blank" rel="noopener">shiyuant@outlook.com</a>！请大家多多批评指正，相互交流，共同成长，谢谢！！！</p>
-<h3 id="附（vep安装笔记）"><a href="#附（vep安装笔记）" class="headerlink" title="附（vep安装笔记）"></a>附（vep安装笔记）</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">#由于我用的是ubuntu server 18.04，不同linux发行版本之间的安装可能存在差异</span><br><span class="line">	$ git clone https://github.com/Ensembl/ensembl-vep.git</span><br><span class="line">	$ cd ensembl-vep</span><br><span class="line">	$ perl -MCPAN -e shell</span><br><span class="line">	$ cpan&gt;install DBI</span><br><span class="line">	$ cpan&gt;install Bio::DB::HTS</span><br><span class="line">	$ cpan&gt;install LWP::Simple </span><br><span class="line">	$ cpan&gt;install LWP::Protocol::https</span><br><span class="line">	$ cpan&gt;install Archive::Extract</span><br><span class="line">	$ cpan&gt;install Archive::Tar</span><br><span class="line">	$ cpan&gt;install Archive::Zip</span><br><span class="line">	$ cpan&gt;install CGI</span><br><span class="line">	$ cpan&gt;install Time::HiRes</span><br><span class="line">	$ cpan&gt;install DBD::mysql</span><br><span class="line">	$ cpan&gt;q</span><br><span class="line">	$ sudo apt-get install libdbd-mysql-perl</span><br><span class="line">	$ perl INSTALL.pl</span><br><span class="line">	$ perl INSTALL.pl --AUTO af --SPECIES homo_sapiens --ASSEMBLY GRCh37 --DESTDIR /your/path/of/vepdatabase/ --CACHEDIR /your/path/of/vepdatabase/</span><br><span class="line">	$ perl convert_cache.pl --species homo_sapiens --version 94_GRCh37 --dir /your/path/of/vepdatabase/</span><br></pre></td></tr></table></figure>
+<ul>
+<li>原文不贴了，大体的意思我理解的就是，这个突变导致基因功能完全被破坏，那么就定义为PVS1（pathogenic very strong ，这里的数字不代表等级，只是表示序号，以示区分），同时指南也提了几个注意的点。<br></li>
+<li>既然想要脚本实现，那么比较直观的方法就是流程图了，下面直接贴出这个证据实现的流程图：<br></li>
+</ul>
+<p><img src="/2019/06/22/ACMG指南解读笔记（1）- PVS1/pvs1.jpg" alt="原文理解图"></p>
+<ul>
+<li><p>这是基于InterVar源码理出来的逻辑图<br></p>
+</li>
+<li><p>来理解一下：<br></p>
+<ul>
+<li>frameshift，stopgain包含了指南中的无义突变、移码突变，说明一下，源码中还有‘nonsense’，但是该词条在ANNOVAR注释结果中是没有的（InterVar的筛选是基于ANNOVAR的），‘stopgain’可认为是‘nonsense’；同时“起始密码子变异”这一类变异在ANNOVAR中也是没有的，起始密码子在真核生物中可以认为只有AUG一种，如果发生变异了，只有一种情况，就是无法转录了，这种情况2/3能被检测出来并标为”exonic,splicing”，毕竟起始密码子就在RNA剪切位点上；“单个或多个外显子缺失”可以包含在上一种情况里；还有一个问题就是论文中作者提到了stop_less，但是在源码中似乎没有体现。<br></li>
+<li>第二点就是要判断这些变异会不会导致功能丧失，这一点直接判断是很不好判断的，InterVar的做法是对ClinVar数据进行处理，挑出存在于MedGen数据库中的相关变异，过滤掉高频变异（频率大于5%）以及一些结果矛盾的变异。最后挑出的基因列表里，每个gene中至少有一个变异在Clinvar中为“pathogenic”，并与ExAC对<a href="https://www.nature.com/articles/nature19057" target="_blank" rel="noopener">LOF容忍度打分</a>很低的基因取了并集，最后得到了这么一个list（挂在github上了）。<br></li>
+<li>第三点，如果是在经典的剪接位点发生突变，这一点判断方法，主要是基于dbscSNV的打分来判断的，阈值是0.6，数据库在ANNOVAR上直接可以下载。<br></li>
+<li>同时指南有几个附加注意点：<br><ul>
+<li>第一点我的解读就是判断某些突变的特异性，比如只有杂合错义突变时才致病, 而杂合无功能变异却是良性的，这个例子本身就是很特殊的，如果真碰到这个情况，且这种情况已知，那么一开始就可以特异性找出来或筛掉相关变异，如果一开始不知道，这一步也只是让某些变异有害性增强，在复查的时候也可以筛掉，所以影响不大。<br></li>
+<li>第二点主要体现在对于exon的选取，作者筛掉了在第一和最后一个exon上的变异，并在下一步过滤了倒数第二个exon（InterVar提供了相关列表，挂在github上了）上靠近3‘端50bp的变异，这里不太明白的是为什么要筛掉第一个exon上的变异，指南中似乎没有提到相关的要求，而InterVar论文中也没有相关说明。<br></li>
+<li>第三点的一部分通过dbscSNV体现，其余的无法比较好的直接判断，所以没有体现，第四点，第五点同理，不好判断。<br></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>从上面的分析可以得到，对于ACMG指南，解读和判断经常是很难面面俱到的，有些时候只能尽量通过一些方法来辅助判断，但是在使用这些辅助手段的时候就要慎重，辅助手段本身是存在一定的偏差的。<br></p>
+</li>
+<li><p>总结一下我的问题和我觉得可以改进的地方：<br></p>
+<ol>
+<li>起始密码子第三个碱基发生突变的时候，这种情况InterVar是如何考虑的，不知道是我没看明白还是InterVar没有考虑到，如果是后者，那么就可以针对改进了（即使这种情况可能性可能很低）。<br></li>
+<li>stop_less这种变异是不是可能会造成功能丧失，作者论文中提到了，从我的逻辑来说应该是不太可能会的。<br></li>
+<li>功能缺失基因列表如果能采用Clinvar结合HGMD，那么应该能更准确一点，这一点有条件的小伙伴完全可以考虑一下，更新list的。<br></li>
+<li>不太明白为什么要过滤掉第一个exon上的变异。<br></li>
+</ol>
+</li>
+<li><p>以上问题非常欢迎各位交流指导！！！</p>
+</li>
+</ul>
+<hr>
+<p>水平有限，要是存在什么错误请指出，可发送邮件至<a href="mailto:shiyuant@outlook.com" target="_blank" rel="noopener">shiyuant@outlook.com</a>！请大家多多批评指正，相互交流，共同成长，谢谢！！！<br></p>
+
       
     </div>
 
@@ -579,12 +556,12 @@
   <!-- JS库 sweetalert 可修改路径 -->
   <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-  <p><span>本文标题:</span><a href="/2019/06/18/WGS分析笔记（5）- annotation/">WGS分析笔记（5）- annotation</a></p>
+  <p><span>本文标题:</span><a href="/2019/06/22/ACMG指南解读笔记（1）- PVS1/">ACMG指南解读笔记（1）- PVS1</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 TongShiyuan 的个人博客">TongShiyuan</a></p>
-  <p><span>发布时间:</span>2019年06月18日 - 12:06</p>
+  <p><span>发布时间:</span>2019年06月22日 - 20:06</p>
   <p><span>最后更新:</span>2019年06月22日 - 23:06</p>
-  <p><span>原始链接:</span><a href="/2019/06/18/WGS分析笔记（5）- annotation/" title="WGS分析笔记（5）- annotation">http://tongshiyuan.github.io/2019/06/18/WGS分析笔记（5）- annotation/</a>
-    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://tongshiyuan.github.io/2019/06/18/WGS分析笔记（5）- annotation/" aria-label="复制成功！"></i></span>
+  <p><span>原始链接:</span><a href="/2019/06/22/ACMG指南解读笔记（1）- PVS1/" title="ACMG指南解读笔记（1）- PVS1">http://tongshiyuan.github.io/2019/06/22/ACMG指南解读笔记（1）- PVS1/</a>
+    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://tongshiyuan.github.io/2019/06/22/ACMG指南解读笔记（1）- PVS1/" aria-label="复制成功！"></i></span>
   </p>
   <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
 </div>
@@ -620,6 +597,8 @@
         
         <div class="post-tags">
           
+            <a href="/tags/ACMG/" rel="tag"># ACMG</a>
+          
             <a href="/tags/生信/" rel="tag"># 生信</a>
           
             <a href="/tags/WGS/" rel="tag"># WGS</a>
@@ -635,8 +614,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/06/18/WGS分析笔记（4）- Call SNVs indels/" rel="next" title="WGS分析笔记（4）- Call SNVs/indels">
-                <i class="fa fa-chevron-left"></i> WGS分析笔记（4）- Call SNVs/indels
+              <a href="/2019/06/21/ACMG指南解读笔记（0）- 定个小目标/" rel="next" title="ACMG指南解读笔记（0）- 定个小目标">
+                <i class="fa fa-chevron-left"></i> ACMG指南解读笔记（0）- 定个小目标
               </a>
             
           </div>
@@ -644,10 +623,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/06/18/fastqc的线程与速度测试/" rel="prev" title="fastqc的线程与速度测试">
-                fastqc的线程与速度测试 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -691,17 +666,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <div class="site-overview-wrap sidebar-panel">
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -837,23 +803,6 @@
         </div>
       </div>
 
-      
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-            
-            
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#CCRS"><span class="nav-number">1.</span> <span class="nav-text">CCRS</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#S-CAP"><span class="nav-number">2.</span> <span class="nav-text">S-CAP</span></a></li></ol><li class="nav-item nav-level-3"><a class="nav-link" href="#附（vep安装笔记）"><span class="nav-number"></span> <span class="nav-text">附（vep安装笔记）</span></a></li></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
       
 
       

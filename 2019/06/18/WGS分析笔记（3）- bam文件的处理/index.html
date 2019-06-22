@@ -118,7 +118,7 @@
 <meta property="og:image" content="http://tongshiyuan.github.io/2019/06/18/WGS分析笔记（3）-%20bam文件的处理/depth.png">
 <meta property="og:image" content="http://tongshiyuan.github.io/2019/06/18/WGS分析笔记（3）-%20bam文件的处理/depth.cdf.png">
 <meta property="og:image" content="http://tongshiyuan.github.io/2019/06/18/WGS分析笔记（3）-%20bam文件的处理/coverage.png">
-<meta property="og:updated_time" content="2019-06-18T05:11:52.330Z">
+<meta property="og:updated_time" content="2019-06-22T15:35:25.860Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="WGS分析笔记（3）- bam文件的处理">
 <meta name="twitter:description" content="上一篇记录了mapping这一步的软件选择，也讲到了对于sam文件如何考虑MAPQ的过滤，这篇我主要想记录一下bam文件在进行call variation之前的处理。  包括MAPQ的筛选等都是这个处理的一部分。  既然要处理bam文件，不得不提bam文件的格式。  处理生物信息的数据时会发现，文件有各种各样的格式，眼花缭乱，这也是我一开始接触课题接触分析流程时的感受。但是多和这些文件打交道以后">
@@ -430,12 +430,24 @@
                 
               
 
-              <time title="创建时间：2019-06-18 12:50:51 / 修改时间：13:11:52" itemprop="dateCreated datePublished" datetime="2019-06-18T12:50:51+08:00">2019-06-18</time>
+              <time title="创建时间：2019-06-18 12:50:51" itemprop="dateCreated datePublished" datetime="2019-06-18T12:50:51+08:00">2019-06-18</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-06-22 23:35:25" itemprop="dateModified" datetime="2019-06-22T23:35:25+08:00">2019-06-22</time>
               
             
           </span>
@@ -625,7 +637,7 @@
 </li>
 <li><p>上图我按不同的染色体进行统计覆盖率，去掉了其余的一些未知染色体位置的序列上的信息（这个信息具体要了解参考基因组的特性，比如有些序列目前能明确在人身上，却不知道具体在哪个染色体等，这些信息也是包含在参考基因组中的，仔细看参考基因组会发现，除了22条常染色体，2条性染色体，还有很多其他的序列），这个覆盖率并不是我想想的那般全体高于99%，也没公司给的报告描述的那么好，主要是因为MAPQ的过滤导致了这样的结果，但是总体的覆盖率还可以。</p>
 </li>
-<li><p>水平有限，要是存在什么错误请评论指出，可发送邮件至<a href="mailto:shiyuant@outlook.com" target="_blank" rel="noopener">shiyuant@outlook.com</a>！请大家多多批评指正，相互交流，共同成长，谢谢！！！</p>
+<li><p>水平有限，要是存在什么错误请指出，可发送邮件至<a href="mailto:shiyuant@outlook.com" target="_blank" rel="noopener">shiyuant@outlook.com</a>！请大家多多批评指正，相互交流，共同成长，谢谢！！！</p>
 </li>
 </ul>
 
@@ -660,7 +672,7 @@
   <p><span>本文标题:</span><a href="/2019/06/18/WGS分析笔记（3）- bam文件的处理/">WGS分析笔记（3）- bam文件的处理</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 TongShiyuan 的个人博客">TongShiyuan</a></p>
   <p><span>发布时间:</span>2019年06月18日 - 12:06</p>
-  <p><span>最后更新:</span>2019年06月18日 - 13:06</p>
+  <p><span>最后更新:</span>2019年06月22日 - 23:06</p>
   <p><span>原始链接:</span><a href="/2019/06/18/WGS分析笔记（3）- bam文件的处理/" title="WGS分析笔记（3）- bam文件的处理">http://tongshiyuan.github.io/2019/06/18/WGS分析笔记（3）- bam文件的处理/</a>
     <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://tongshiyuan.github.io/2019/06/18/WGS分析笔记（3）- bam文件的处理/" aria-label="复制成功！"></i></span>
   </p>
@@ -787,7 +799,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-count">10</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -951,7 +963,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共20k字</span>
+  <span class="post-count">博客全站共21.2k字</span>
 </div>
         
 <div class="busuanzi-count">

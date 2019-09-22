@@ -375,6 +375,258 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://tongshiyuan.github.io/2019/09/22/WGS分析笔记（6）- call CNV 和一些其他/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="TongShiyuan">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/logo.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Taro">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/09/22/WGS分析笔记（6）- call CNV 和一些其他/" class="post-title-link" itemprop="url">WGS分析笔记（6）- call CNV 和一些其他</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-09-22 19:33:47 / 修改时间：21:27:06" itemprop="dateCreated datePublished" datetime="2019-09-22T19:33:47+08:00">2019-09-22</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/我的WGS/" itemprop="url" rel="index"><span itemprop="name">我的WGS</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ul>
+<li><p>CNVs（copy number variations）是除了SNVs、INDELs之外另一种可能导致孟德尔遗传疾病的变异类型，指的是大片段（1kb到几个Mb）的碱基出现拷贝数的变异（del、dup等）。</p>
+</li>
+<li><p>目前常用的关于CNVs的数据库有DGV、DECIPHER等，以下链接可供参考。</p>
+<ul>
+<li>健康人群 CNV： Genomic Variants  <a href="http://www.projects.tcag.ca/variation" target="_blank" rel="noopener">www.projects.tcag.ca/variation</a></li>
+<li>神经发育异常的患者 CNVs： DECIPHER  <a href="http://www.sanger.ac.uk/PostGenomic/decipher/" target="_blank" rel="noopener">www.sanger.ac.uk/PostGenomic/decipher/</a></li>
+<li>染色体异常的患者 CNVs： <a href="http://www.ukcad.org.uk/cocoon/ukcad、www.isca.genetics.emory.edu/" target="_blank" rel="noopener">www.ukcad.org.uk/cocoon/ukcad、www.isca.genetics.emory.edu/</a></li>
+<li>染色体非平衡变异的患者 CNVs： <a href="http://www.ecaruca.net" target="_blank" rel="noopener">www.ecaruca.net</a></li>
+</ul>
+</li>
+<li><p>目前临床上对于CNVs的检测一般有CMA、MLPA、CNV-se、aCGH等技术，但是对于WES、WGS的数据也可以使用软件进行call CNVs。</p>
+</li>
+<li><p>目前有很多进行call CNVs的软件，本文主要记录cnvnator的安装和使用。</p>
+</li>
+<li><p>cnvnator相关文章发表在2011年的《Genome research》上，而相关的软件也挂在了github上，网址如下：<a href="https://github.com/abyzovlab/CNVnator" target="_blank" rel="noopener">https://github.com/abyzovlab/CNVnator</a></p>
+</li>
+<li><p>cnvnator最大的一个缺点就是安装十分不便，和其他软件相比，这基本上是最被大家吐槽的一点，其次是运行所占内存也是较大的。</p>
+</li>
+<li><p>当然你可以选择现成的docker使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker pull diploid/cnvnator</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>我这里记录并分享一下我的使用经历包括安装经历。</p>
+</li>
+<li><p>首先是安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"># 笔者是作为管理员在Root的权限下安装的，可以在个人用户下安装</span><br><span class="line"># 首先是root的安装，root可以理解为一个软件，也是cnvnator所依赖的</span><br><span class="line">$ git clone https://github.com/root-project/root.git</span><br><span class="line">$ mkdir build</span><br><span class="line">$ cd build</span><br><span class="line">$ cmake ../root</span><br><span class="line">$ make -j 4</span><br><span class="line">$ source bin/thisroot.sh</span><br><span class="line"># 这里提醒一下，笔者安装过多次root，各种版本的，新的、旧的，无一都失败了，只有上述这个成功了</span><br><span class="line"># 接下来就是CNVnator的安装，</span><br><span class="line">$ git clone https://github.com/abyzovlab/CNVnator.git</span><br><span class="line">$ cd CNVnator</span><br><span class="line"># 此处的用你的samtools安装位置在CNVnator目录下建立软链接</span><br><span class="line">$ ln -s /your/path/of/samtools-1.9/ samtools</span><br><span class="line"># 安装依赖包yeppp</span><br><span class="line">$ mkdir yeppp &amp;&amp; cd yeppp</span><br><span class="line">$ wget http://bitbucket.org/MDukhan/yeppp/downloads/yeppp-1.0.0.tar.bz2</span><br><span class="line">$ tar xjf yeppp-1.0.0.tar.bz2</span><br><span class="line">$ make clean</span><br><span class="line">$ make LIBS=&quot;-lcrypto&quot;</span><br><span class="line"># 此处将root软件加入变量中</span><br><span class="line">$ vim .bashrc</span><br><span class="line">加入：export LD_LIBRARY_PATH=/your/path/of/root/build/lib:$LD_LIBRARY_PATH</span><br><span class="line">$ source .bashrc</span><br><span class="line"># 到这里就安装完了，你也可以建立一个软链接把cnvnator链接到bin目录下，这样就可以直接用cnvnator作为命令</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>可以看到安装还是很麻烦的，笔者也是安装了N次才成功，都快崩溃的那种。</p>
+</li>
+<li><p>接下来是使用记录，使用还是很方便的，可以安装github的说明一步一步来，没有什么太难的地方，这里稍微记录一下并介绍个别参数。</p>
+</li>
+<li><p>以我自己的数据为例，我的是生殖细胞系的WGS数据，输入文件是已经比对完的bam文件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ cnvnator -root sample.root -tree /your/path/of/bam</span><br><span class="line">$ cnvnator -root sample.root -his 100 -d /your/path/of/hg19</span><br><span class="line">$ cnvnator -root sample.root -stat 100</span><br><span class="line">$ cnvnator -root sample.root -partition 100</span><br><span class="line">$ cnvnator -root sample.root -call 100 &gt; sample.cnvnator</span><br><span class="line">$ awk &apos;&#123; print $2 &#125; END &#123; print &quot;exit&quot; &#125;&apos; sample.cnvnator | cnvnator -root sample.root -genotype 100 &gt; sample.gt</span><br><span class="line">$ /your/path/of/CNVnator/cnvnator2VCF.pl -prefix sample -reference hg19 sample.cnvnator /your/path/of/hg19 &gt; sample.vcf</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>上面就是常规步骤了，介绍几个点：</p>
+<ul>
+<li><p>首先是 -his 参数的值，也就是bin_size的值，这个可以根据CNVnator作者的建议，根据测序深度的不同进行调整：100X: 30；20-30X: 100；4-6X: 500；再低就1000</p>
+</li>
+<li><p>其次是 -d 参数，关于这个参数，官网有两种用法：</p>
+<ol>
+<li>如果使用 -d 那就后面接参考基因组所在目录，作者自己是在 hg19 下有各个不同染色体的fasta文件，虽然按照说明是只要目录下有参考基因组就行了。这里笔者一开始目录中只有合并后的hg19的文件，发现下面的步骤报错，后来就重新下载hg19文件，解压后没有合并，运行正常。</li>
+<li>如果使用 -fasta 参数就在后面跟参考基因组的压缩文件，笔者是把 hg19.fa 压缩成了 hg19.fa.gz ，但是后面还是报错了</li>
+</ol>
+</li>
+<li><p>第六句<code>awk</code>那一句可以不运行，主要是看genotype，不影响最后一步转换为vcf文件</p>
+</li>
+</ul>
+</li>
+<li><p>到这一步其实也就差不多了，那么下面是关于CNVs数据的一些简单处理方式和意见的记录，这一块笔者也没有仔细去研究，如果有需要可以单独交流。</p>
+</li>
+<li><p>关于CNV结果的注释，这里参考annovar注释：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ perl convert2annovar.pl -format vcf4old sample.vcf &gt; sample.avinput</span><br><span class="line">$ perl table_annovar.pl W001.avinput /your/path/of/annovar/humandb/ --buildver hg19 -remove -out sample -protocol refGene,cytoBand,omim201806,gwasCatalog,CCRS,phastConsElements100way,phastConsElements46way,phastConsElements46wayPlacental,phastConsElements46wayPrimates,tfbsConsSites,rmsk,dgvMerged,HIP,Constraint -operation g,r,r,r,r,r,r,r,r,r,r,r,r,r -nastring . --thread 12</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>其实对于 CNVs 的注释和筛选，所能使用的数据库并不像 SNVs 那么多，所幸的是CNVs的结果也没那么多。</p>
+</li>
+<li><p>上面注释所涉及的数据库大多数能在annovar中直接下载，除了omim201806、CCRS、HIP、Constraint。</p>
+<ul>
+<li><p>OMIM的数据可以在OMIM官网通过申请下载，这里不方便挂出来，不过笔者最近一次申请都过去几个月了，OMIM还是没有把链接发过来。</p>
+</li>
+<li><p>CCRS的数据可以在笔者之前的文章，关于注释的那一篇中下载并修改格式，但是用在CNVs中参考价值可能不大，可自行查阅。</p>
+</li>
+<li><p>HIP和Constraint的数据来源于DECIPHER，可以作为参考，下面记录一下如何下载并转换格式。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"># DECIPHER数据库提供了在线的可视化的检索方式，可以查看相关变异的很多信息，包括表型、致病性等，这些信息都是临床或科研单位上传的。其中DECIPHER可供下载的数据包括以下三种</span><br><span class="line"># Haploinsufficiency Predictions:</span><br><span class="line">#    Updated predictions of haploinsufficiency as described by Huang et al. (2010, PLoS Genetics). Available as a Bed file for download from the link above.</span><br><span class="line">$ wget https://decipher.sanger.ac.uk/files/downloads/HI_Predictions_Version3.bed.gz</span><br><span class="line"># Population Copy-Number Variation Frequencies</span><br><span class="line">#    Common copy-number variants and their frequencies, as used and displayed in DECIPHER.</span><br><span class="line">$ wget https://decipher.sanger.ac.uk/files/downloads/population_cnv.txt.gz</span><br><span class="line"># Development Disorder Genotype – Phenotype Database (DDG2P) </span><br><span class="line">#    a curated list of genes reported to be associated with developmental disorders, compiled by clinicians as part of the DDD study to facilitate clinical feedback of likely causal variants. Please note: This file is maintained by the European Bioinformatics Institute. Its contents may differ from DECIPHER due to different update cycles.</span><br><span class="line">$ wget http://www.ebi.ac.uk/gene2phenotype/downloads/DDG2P.csv.gz</span><br><span class="line"># 上面是下载了三个数据库，当然下面只用到了两个，还有一个频率数据库笔者也不知道怎么去注释和使用比较好</span><br><span class="line"># 上述三个数据库直接用gunzip去解压就行</span><br><span class="line"># pLI:</span><br><span class="line">	$ awk -F &quot;\t&quot; &apos;&#123;print 0&quot;\t&quot;$3&quot;\t&quot;$5&quot;\t&quot;$6&quot;\t&quot;$20&#125;&apos; Constraint.txt &gt; hg19_Constraint.txt</span><br><span class="line">	$ sed -i &apos;1d&apos; hg19_Constraint.txt</span><br><span class="line"># HIP:</span><br><span class="line">	$ sed -i &apos;1d&apos; HI_Predictions_Version3.bed </span><br><span class="line">	$ bedtools sort -i HI_Predictions_Version3.bed &gt; HIP.txt</span><br><span class="line">	$ awk -F &quot;\t&quot; &apos;&#123;print 0&quot;\t&quot;$1&quot;\t&quot;$2&quot;\t&quot;$3&quot;\t&quot;$4&#125;&apos; HIP.txt &gt; hg19_HIP.txt</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>最后记得把两个数据库放到 humandb 目录下。</p>
+</li>
+<li><p>DECIPHER有对这两个数值进行介绍</p>
+<ul>
+<li><p>HIP，参考<a href="https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1001154" target="_blank" rel="noopener">paper</a></p>
+<p><img src="/2019/09/22/WGS分析笔记（6）- call CNV 和一些其他/1.png" alt="1569157836561"></p>
+</li>
+<li><p>pLI，参考<a href="https://www.nature.com/articles/nature19057" target="_blank" rel="noopener">paper</a></p>
+<p><img src="/2019/09/22/WGS分析笔记（6）- call CNV 和一些其他/2.png" alt="1569157975971"></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>除此之外，对于CNVs的研究也可以考虑从trio样本出发。考虑思路和snv类似，就是从遗传模式考虑，比如患者父母正常的情况下，可以寻找de novo、AR类型的变异。还有就是可以考虑将CNV的数据结合SNV/INDEL一起分析，主要就是CNV可能与SNV/INDEL构成复合杂合等情况。当然这些都是一些思路。</p>
+<hr>
+<p>水平有限，要是存在什么错误请指出，可发送邮件至<a href="mailto:shiyuant@outlook.com" target="_blank" rel="noopener">shiyuant@outlook.com</a>！请大家多多批评指正，相互交流，共同成长，谢谢！！！</p>
+</li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    <div>
+  
+</div>
+    <div>
+      
+    </div>
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://tongshiyuan.github.io/2019/07/26/python-numpy学习笔记/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2639,7 +2891,7 @@ Median precip on non-summer rainy days (inches): 6.533648713530407</code></pre><
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-06-22 23:35:44" itemprop="dateModified" datetime="2019-06-22T23:35:44+08:00">2019-06-22</time>
+                <time title="修改时间：2019-09-22 19:34:33" itemprop="dateModified" datetime="2019-09-22T19:34:33+08:00">2019-09-22</time>
               
             
           </span>
@@ -3568,347 +3820,6 @@ Median precip on non-summer rainy days (inches): 6.533648713530407</code></pre><
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://tongshiyuan.github.io/2019/06/18/WGS分析笔记（1）- 原始数据以及质控/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="TongShiyuan">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/logo.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Taro">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/06/18/WGS分析笔记（1）- 原始数据以及质控/" class="post-title-link" itemprop="url">WGS分析笔记（1）- 原始数据以及质控</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-06-18 00:23:29" itemprop="dateCreated datePublished" datetime="2019-06-18T00:23:29+08:00">2019-06-18</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-06-22 23:35:10" itemprop="dateModified" datetime="2019-06-22T23:35:10+08:00">2019-06-22</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/我的WGS/" itemprop="url" rel="index"><span itemprop="name">我的WGS</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ul>
-<li><p>二代测序方式分为三种：<br></p>
-<ul>
-<li><em>single read 单端测序</em><br></li>
-<li><em>paired-end read 双端测序</em><br></li>
-<li><em>mate-pair read 配对测序</em><br></li>
-</ul>
-</li>
-<li><p>虽然有三种方式，但是大多数数据（包括本课题）为双端测序，至于三者之间的差别、优缺点以及适用场合可以自行搜索。<br></p>
-</li>
-<li><p>接下来讲的内容都是基于双端测序的。<br></p>
-</li>
-<li><p>测序仪原始下机的数据我们称为raw data，二代测序是将DNA片段打断了再测的，每个测序片段我们称为read，质控完的数据称为clean data。既然是双端测序，那么文件就是成对出现的，分别记录reads两端的信息：一般的命名是*.fq1.gz、*.fq2.gz（’ * ‘ 表示通配符），这是一个fastq文件，通常以fq或fastq作为后缀，具体内容下方会介绍。这里我给大家展示我们课题的一个真实数据，给大家看看大小以及命名方式。<br><br><img src="/2019/06/18/WGS分析笔记（1）- 原始数据以及质控/%E5%8E%9F%E5%A7%8B%E6%95%B0%E6%8D%AE%E5%B1%95%E7%A4%BA.png" alt="原始数据展示"></p>
-</li>
-<li><p>我们可以看到，首先我把我的用户名打码了，呵呵，开个玩笑。<br></p>
-</li>
-<li><p>首先这个样本总共有五个文件，这就是公司给的原始数据，我原封不动的上传到了我的服务器上，也没改名也没怎样，我在图片上画了五个蓝色的框，下面是分别代表的意思：<br></p>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">W2018001：是样本的名字，其实我一开始提交给公司的名字是2018001，为什么多了个W我也不知道啊。</span><br><span class="line">NZTD...：这一串是公司自动生成的编号，他们内部使用的，不知道也不需要知道啥意思，不同的公司，可能没有这个</span><br><span class="line">HCV...：flowcell_ID的信息，一般情况下一个样本是一样的</span><br><span class="line">L1：flowcell_lane的信息，图中有L1和L2，这也是为什么一个数据他给我四个文件的原因，他在不同的lane上测的，这里还要注意的一点就是，这个lane的值可能是同一个，就是即使碰到都是L1也是可能的</span><br><span class="line">1，2：分别代表reads的两端</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>我们可以看到，这个30X的WGS的数据量还是很大的，所以为什么他会是压缩文件，不同公司给的命名可能不一样，不过大体不会相差太多，具体命名的含义也可以问问公司的。<br></li>
-<li>这里给到的是一个样本2对文件，实际情况是，可能有多对或者只有一对文件，对于这样的情况，我们的处理方式一般是看作一个文件处理，就是merge一下，有见过有些课题组是在这一步直接merge，我的处理方式是后期bam文件再merge。<br></li>
-<li>好了，拿到这么一个数据，我们做的第一件事情应该是校验数据的完整性！！！这点很重要，即使一般情况下，传输都不会出错，但这一步还是要做的，怎么去做呢，就看这个截图里的第一个文件MD5.txt，其实这就是一个文本文件，打开了看看是这样的<br></li>
-</ul>
-<p><img src="/2019/06/18/WGS分析笔记（1）- 原始数据以及质控/MD5%E4%BF%A1%E6%81%AF.png" alt="MD5信息"></p>
-<ul>
-<li>就是这样的四行信息，也就是一个文件名对应一个校验码，最简单的校验方式，linux系统自带的MD5校验命令：<br></li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ md5sum -c MD5.txt</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>这个还是需要一点点时间的，大家要耐心等待。展示一下我这里的结果吧（其实在上传完数据的时候我就校验过）<br></li>
-</ul>
-<p><img src="/2019/06/18/WGS分析笔记（1）- 原始数据以及质控/%E6%A0%A1%E9%AA%8C%E7%BB%93%E6%9E%9C.png" alt="校验结果"></p>
-<hr>
-<ul>
-<li><p>好了，校验完了，没问题，那么就给大家介绍一下文件的格式。<br></p>
-</li>
-<li><p>文件是什么呢，其实就是文本文件，可以直接查看，以下是示例：<br><img src="/2019/06/18/WGS分析笔记（1）- 原始数据以及质控/fastq%E6%A0%BC%E5%BC%8F.png" alt="fastq格式"></p>
-</li>
-<li><p>一条read一条记录，一条记录占四行，第一行是注释，第二行是序列，就是我们所说的ATCG碱基序列，第三行是‘+’，第四行是对应的每个碱基的测序质量，也就是fastq中的“q”。每条记录之间是没有空格的。<br></p>
-</li>
-<li><p>贴一下关于第一行的解释<br></p>
-</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>EAS139</th>
-<th>The unique instrument name</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>136</td>
-<td>Run ID</td>
-</tr>
-<tr>
-<td>FC706VJ</td>
-<td>Flowcell ID</td>
-</tr>
-<tr>
-<td>2</td>
-<td>Flowcell lane</td>
-</tr>
-<tr>
-<td>2104</td>
-<td>Tile number within the flowcell lane</td>
-</tr>
-<tr>
-<td>15343</td>
-<td>‘x’-coordinate of the cluster within the tile</td>
-</tr>
-<tr>
-<td>197393</td>
-<td>‘y’-coordinate of the cluster within the tile</td>
-</tr>
-<tr>
-<td>1</td>
-<td>Member of a pair, 1 or 2 (paired-end or mate-pair reads only)</td>
-</tr>
-<tr>
-<td>Y</td>
-<td>Y if the read fails filter (read is bad), N otherwise</td>
-</tr>
-<tr>
-<td>18</td>
-<td>0 when none of the control bits are on, otherwise it is an even number</td>
-</tr>
-<tr>
-<td>ATCACG</td>
-<td>Index sequence</td>
-</tr>
-</tbody></table>
-<ul>
-<li><p>第一个是测序机器ID，独一无二的，你可以去illumina官网查到的（我没查过）<br></p>
-</li>
-<li><p>第二个是这个机器跑的次数，一般机器都是有使用寿命的，所以次数越多肯定结果越差，那么一般在什么区间合适呢，我的老师给的建议是200-9999，为啥还有下限呢，那是因为，机器刚开始跑的那几次，需要磨合嘛，不是很准。看来这个展示数据不是很好啊，吓得我赶紧去看了下我的数据，还好，在212次（懒得贴图了，hexo弄个图比简书还麻烦），在范围内。<br></p>
-</li>
-<li><p>倒数第三个，表示数据有没有被过滤过，一般我们的原始数据肯定是N的，要是给的原始数据是Y，你就得好好问问公司原因了。<br></p>
-</li>
-<li><p>其余具体的我就不解释了，有问题可以评论交流。<br></p>
-</li>
-<li><p>第二行要注意的是，可能有N的出现，那是因为有些碱基没被测出来。<br></p>
-</li>
-<li><p>第四行是ASCII码表示的碱基质量，这样就能保证质量是用一个字符表示的，和碱基一一对应。公式如下：<br><br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;P=10^-[(n-33)/10]</p>
-</li>
-<li><p>举个栗子：比如“?”在ASCII码表上对应的编号是63，那么n就是63，减去33以后就是30，也就是我们说的Q30了，所以<code>Q = n - 33</code>，P算出来就是0.001，这个就是错误率，反过来，准确率就是99.9%，Q30就是准确率99.9%，同理Q20就是准确率99%。<br></p>
-</li>
-<li><p>ok，介绍完格式，介绍两款质控的软件，fastqc和fastp<br></p>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">fastqc：</span><br><span class="line">$ wget http://www.bioinformatics.babraham.ac.uk/projects/fastqc/fastqc_v0.11.7.zip</span><br><span class="line">$ unzip fastqc_v0.11.7.zip</span><br><span class="line">$ cd FastQC/</span><br><span class="line">$ chmod 755 fastqc</span><br><span class="line">fastp：</span><br><span class="line">$ wget http://opengene.org/fastp/fastp</span><br><span class="line">$ chmod 755 fastp</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>以上是我的安装方式，fastqc是一个很常用的软件，我想只要不是小白都用过。对于ubuntu用户请用我提供的方式进行安装，用<code>apt-get install fastqc</code>可能在使用的时候出现如下报错<br></li>
-</ul>
-<p><img src="/2019/06/18/WGS分析笔记（1）- 原始数据以及质控/fastqc%E9%94%99%E8%AF%AF.jpg" alt="fastqc错误"></p>
-<ul>
-<li>至于fastp，是用来清洗质量不好的reads的，其实类似的软件很多，包括trimmomatic等，之所以选择这个是因为用过那么多软件后，发现fastp无论在安装还是使用上都很顺手，仅此而已。<br></li>
-<li>好了，现在让我们来使用fastqc对raw data的质量进行分析并查看<br></li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ fastqc [-o output dir] [--(no)extract] [-f fastq|bam|sam] [-c contaminant file] seqfile1 .. seqfileN</span><br><span class="line">#这是fastqc的使用方法，其实很简单，对于不懂的软件，我一般的推荐是，先看官方说明，再逛逛论坛，这里不展开说这个软件怎么使用了，下面是我的使用代码</span><br><span class="line">$ fastqc -o your/path/to/out -t 4 $&#123;datadir&#125;/*.fq.gz</span><br><span class="line">#是不是超级简单，-o是报告输出的目录，这个目录必须是存在的，-t是线程数</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>结果如下，要放在早几年，估计是很难见到这么干净的原始数据了，为此我还专门请教了一些老师，这么干净的数据的可信程度。得益于illumina公司对仪器的升级改善，数据的质量也是越来越好了。<br></li>
-</ul>
-<p><img src="/2019/06/18/WGS分析笔记（1）- 原始数据以及质控/fastqc.png" alt="fastqc.png"></p>
-<ul>
-<li><p>但是即便如此，我们还是要对raw data进行清洗的，数据的质量直接决定了后面分析的准确性，是一切分析的前提，我们一直都在说QC，QC也是基础，但是它的重要性不容忽视。下面是我要查看的质控的内容：<br></p>
-<p>​    • read各个位置的碱基质量值分布<br></p>
-<p>​    • 碱基的总体质量值分布<br></p>
-<p>​    • read各个位置上碱基分布比例，目的是为了分析碱基的分离程度<br><br>​    • GC含量分布<br></p>
-<p>​    • read各位置的N含量<br><br>​    • read是否还包含测序的接头序列<br></p>
-</li>
-<li><p>下面是我的对于clean data的指标：<br></p>
-<p>​    1.将含有接头的reads对去除，或者cut接头<br></p>
-<p>​    2.测序错误率分布检查，一般情况下，每个碱基位置的测序错误率都应该低于1%<br></p>
-<p>​    3.GC含量，理论上A=T，C=G，前几个碱基可能会有波动，GC含量整体在41.5%左右<br><br>​    4.平均质量值分布：Q30平均比例≥80%，平均错误率≤0.1%<br></p>
-</li>
-<li><p>为了达到这样的目标，我的筛选是条件是：<br></p>
-<p>​    去除含接头（adapter）的一对reads；可以酌情考虑去除接头保留reads<br></p>
-<p>​    当某一端read中的N含量超过该条read长度比例10%，去除该对reads<br><br>​    当某一端read中低质量（Q≤20）碱基数超过该read长度比例的50%时，去除该对reads<br></p>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ fastp -i 1.fq.gz -I 2.fq.gz \</span><br><span class="line">	--adapter_sequence $&#123;Adapter_R1&#125; \</span><br><span class="line">	--adapter_sequence_r2 $&#123;Adapter_R2&#125; \#不同的试剂盒、仪器，会有不同的接头，这个可以咨询公司，也可以选择去掉这两个参数，影响不大</span><br><span class="line">	-o your/path/of/data/cleaned.1.fq.gz \</span><br><span class="line">	-O your/path/of/data/cleaned.2.fq.gz \#输出的clean data的位置和名称</span><br><span class="line">	-c -q 20 -u 50 -n 15 -5 20 -3 20 -w 16 \</span><br><span class="line">	-h your/path/of/report/clean.html -j your/path/of/report/clean.json #这俩参数分别是不同格式报告的输出位置和文件名</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>别的不多说，解释一下我用到的几个参数:<br></p>
-<p>​    -c：对overlap区域进行纠错，适用于PE<br></p>
-<p>​    -q：设置低质量的标准，默认是15，多数公司这里设为5<br><br>​    -u：低质量碱基所占比例，默认40代表40%，只要有一条read不满足条件就成对丢掉<br><br>​    -n：过滤N碱基过多的reads，15代表个数，因为一般PE150的reads长度是150<br><br>​    -w：线程数，这里要注意！范围是1-16，建议是8，亲测，8和16差不多<br><br>​    -5 -3：根据质量值来截取reads，分别对应5‘端和3’端，得到reads长度可能不等<br></p>
-<p>具体请参考官网说明<br></p>
-</li>
-<li><p>这个时候再看clean data结果，就无需fastqc了，因为fastp也会生成一份报告。<br></p>
-</li>
-</ul>
-<p><img src="/2019/06/18/WGS分析笔记（1）- 原始数据以及质控/fastp.png" alt="fastp报告部分截图"></p>
-<ul>
-<li>看到结果，其实可以发现，数据还是保留了大部分的，所以完全不用担心cut太狠，导致数据不够。我的原则是，在数据量面前，更应该保证的是数据的准确性，即使会有一点损失，也是值得的，毕竟research更注重的也是准确性，相对于降低假阴性，我更倾向于提高真阳性。<br></li>
-<li>那么得到clean data以后就可以进行下一步mapping了，mapping内容下次再与大家分享。<br></li>
-<li>水平有限，要是存在什么错误请指出，可发送邮箱至<a href="mailto:shiyuant@outlook.com" target="_blank" rel="noopener">shiyuant@outlook.com</a>！请大家多多批评指正，相互交流，共同成长，谢谢！！！<br></li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    <div>
-  
-</div>
-    <div>
-      
-    </div>
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -3957,7 +3868,7 @@ Median precip on non-summer rainy days (inches): 6.533648713530407</code></pre><
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-count">13</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -4133,7 +4044,7 @@ Median precip on non-summer rainy days (inches): 6.533648713530407</code></pre><
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共31.2k字</span>
+  <span class="post-count">博客全站共33.2k字</span>
 </div>
         
 <div class="busuanzi-count">

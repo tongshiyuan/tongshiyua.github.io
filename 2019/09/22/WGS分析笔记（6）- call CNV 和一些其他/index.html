@@ -103,13 +103,21 @@
 
 
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Taro">
-<meta property="og:url" content="http://tongshiyuan.github.io/tags/数据科学/index.html">
+  <meta name="description" content="CNVs（copy number variations）是除了SNVs、INDELs之外另一种可能导致孟德尔遗传疾病的变异类型，指的是大片段（1kb到几个Mb）的碱基出现拷贝数的变异（del、dup等）。  目前常用的关于CNVs的数据库有DGV、DECIPHER等，以下链接可供参考。  健康人群 CNV： Genomic Variants  www.projects.tcag.ca/varia">
+<meta name="keywords" content="生信,WGS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WGS分析笔记（6）- call CNV 和一些其他">
+<meta property="og:url" content="http://tongshiyuan.github.io/2019/09/22/WGS分析笔记（6）- call CNV 和一些其他/index.html">
 <meta property="og:site_name" content="Taro">
+<meta property="og:description" content="CNVs（copy number variations）是除了SNVs、INDELs之外另一种可能导致孟德尔遗传疾病的变异类型，指的是大片段（1kb到几个Mb）的碱基出现拷贝数的变异（del、dup等）。  目前常用的关于CNVs的数据库有DGV、DECIPHER等，以下链接可供参考。  健康人群 CNV： Genomic Variants  www.projects.tcag.ca/varia">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://tongshiyuan.github.io/2019/09/22/WGS分析笔记（6）-%20call%20CNV%20和一些其他/1.png">
+<meta property="og:image" content="http://tongshiyuan.github.io/2019/09/22/WGS分析笔记（6）-%20call%20CNV%20和一些其他/2.png">
+<meta property="og:updated_time" content="2019-09-22T13:27:06.561Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Taro">
+<meta name="twitter:title" content="WGS分析笔记（6）- call CNV 和一些其他">
+<meta name="twitter:description" content="CNVs（copy number variations）是除了SNVs、INDELs之外另一种可能导致孟德尔遗传疾病的变异类型，指的是大片段（1kb到几个Mb）的碱基出现拷贝数的变异（del、dup等）。  目前常用的关于CNVs的数据库有DGV、DECIPHER等，以下链接可供参考。  健康人群 CNV： Genomic Variants  www.projects.tcag.ca/varia">
+<meta name="twitter:image" content="http://tongshiyuan.github.io/2019/09/22/WGS分析笔记（6）-%20call%20CNV%20和一些其他/1.png">
 
 
 
@@ -119,7 +127,7 @@
 
   
   
-  <link rel="canonical" href="http://tongshiyuan.github.io/tags/数据科学/">
+  <link rel="canonical" href="http://tongshiyuan.github.io/2019/09/22/WGS分析笔记（6）- call CNV 和一些其他/">
 
 
 
@@ -129,7 +137,7 @@
   };
 </script>
 
-  <title>标签: 数据科学 | Taro</title>
+  <title>WGS分析笔记（6）- call CNV 和一些其他 | Taro</title>
   
 
 
@@ -177,7 +185,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
     <a href="https://github.com/tongshiyuan" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -249,7 +257,7 @@
         
         
           
-          <li class="menu-item menu-item-tags menu-item-active">
+          <li class="menu-item menu-item-tags">
 
     
     
@@ -313,28 +321,6 @@
   
     
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
   
 
   
@@ -380,57 +366,333 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>数据科学<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
+
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://tongshiyuan.github.io/2019/09/22/WGS分析笔记（6）- call CNV 和一些其他/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="TongShiyuan">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/logo.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Taro">
+    </span>
+
+    
+      <header class="post-header">
+
         
-          <a class="post-title-link" href="/2019/07/26/python-numpy学习笔记/" itemprop="url">
-            
-              <span itemprop="name">python: numpy学习笔记</span>
-            
-          </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">WGS分析笔记（6）- call CNV 和一些其他
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-26T10:08:55+08:00" content="2019-07-26">
-          07-26
-        </time>
-      </div>
+              
+            
+          </h1>
+        
 
-    </header>
-  </article>
+        <div class="post-meta">
+          <span class="post-time">
 
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-09-22 19:33:47 / 修改时间：21:27:06" itemprop="dateCreated datePublished" datetime="2019-09-22T19:33:47+08:00">2019-09-22</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/我的WGS/" itemprop="url" rel="index"><span itemprop="name">我的WGS</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <ul>
+<li><p>CNVs（copy number variations）是除了SNVs、INDELs之外另一种可能导致孟德尔遗传疾病的变异类型，指的是大片段（1kb到几个Mb）的碱基出现拷贝数的变异（del、dup等）。</p>
+</li>
+<li><p>目前常用的关于CNVs的数据库有DGV、DECIPHER等，以下链接可供参考。</p>
+<ul>
+<li>健康人群 CNV： Genomic Variants  <a href="http://www.projects.tcag.ca/variation" target="_blank" rel="noopener">www.projects.tcag.ca/variation</a></li>
+<li>神经发育异常的患者 CNVs： DECIPHER  <a href="http://www.sanger.ac.uk/PostGenomic/decipher/" target="_blank" rel="noopener">www.sanger.ac.uk/PostGenomic/decipher/</a></li>
+<li>染色体异常的患者 CNVs： <a href="http://www.ukcad.org.uk/cocoon/ukcad、www.isca.genetics.emory.edu/" target="_blank" rel="noopener">www.ukcad.org.uk/cocoon/ukcad、www.isca.genetics.emory.edu/</a></li>
+<li>染色体非平衡变异的患者 CNVs： <a href="http://www.ecaruca.net" target="_blank" rel="noopener">www.ecaruca.net</a></li>
+</ul>
+</li>
+<li><p>目前临床上对于CNVs的检测一般有CMA、MLPA、CNV-se、aCGH等技术，但是对于WES、WGS的数据也可以使用软件进行call CNVs。</p>
+</li>
+<li><p>目前有很多进行call CNVs的软件，本文主要记录cnvnator的安装和使用。</p>
+</li>
+<li><p>cnvnator相关文章发表在2011年的《Genome research》上，而相关的软件也挂在了github上，网址如下：<a href="https://github.com/abyzovlab/CNVnator" target="_blank" rel="noopener">https://github.com/abyzovlab/CNVnator</a></p>
+</li>
+<li><p>cnvnator最大的一个缺点就是安装十分不便，和其他软件相比，这基本上是最被大家吐槽的一点，其次是运行所占内存也是较大的。</p>
+</li>
+<li><p>当然你可以选择现成的docker使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker pull diploid/cnvnator</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>我这里记录并分享一下我的使用经历包括安装经历。</p>
+</li>
+<li><p>首先是安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"># 笔者是作为管理员在Root的权限下安装的，可以在个人用户下安装</span><br><span class="line"># 首先是root的安装，root可以理解为一个软件，也是cnvnator所依赖的</span><br><span class="line">$ git clone https://github.com/root-project/root.git</span><br><span class="line">$ mkdir build</span><br><span class="line">$ cd build</span><br><span class="line">$ cmake ../root</span><br><span class="line">$ make -j 4</span><br><span class="line">$ source bin/thisroot.sh</span><br><span class="line"># 这里提醒一下，笔者安装过多次root，各种版本的，新的、旧的，无一都失败了，只有上述这个成功了</span><br><span class="line"># 接下来就是CNVnator的安装，</span><br><span class="line">$ git clone https://github.com/abyzovlab/CNVnator.git</span><br><span class="line">$ cd CNVnator</span><br><span class="line"># 此处的用你的samtools安装位置在CNVnator目录下建立软链接</span><br><span class="line">$ ln -s /your/path/of/samtools-1.9/ samtools</span><br><span class="line"># 安装依赖包yeppp</span><br><span class="line">$ mkdir yeppp &amp;&amp; cd yeppp</span><br><span class="line">$ wget http://bitbucket.org/MDukhan/yeppp/downloads/yeppp-1.0.0.tar.bz2</span><br><span class="line">$ tar xjf yeppp-1.0.0.tar.bz2</span><br><span class="line">$ make clean</span><br><span class="line">$ make LIBS=&quot;-lcrypto&quot;</span><br><span class="line"># 此处将root软件加入变量中</span><br><span class="line">$ vim .bashrc</span><br><span class="line">加入：export LD_LIBRARY_PATH=/your/path/of/root/build/lib:$LD_LIBRARY_PATH</span><br><span class="line">$ source .bashrc</span><br><span class="line"># 到这里就安装完了，你也可以建立一个软链接把cnvnator链接到bin目录下，这样就可以直接用cnvnator作为命令</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>可以看到安装还是很麻烦的，笔者也是安装了N次才成功，都快崩溃的那种。</p>
+</li>
+<li><p>接下来是使用记录，使用还是很方便的，可以安装github的说明一步一步来，没有什么太难的地方，这里稍微记录一下并介绍个别参数。</p>
+</li>
+<li><p>以我自己的数据为例，我的是生殖细胞系的WGS数据，输入文件是已经比对完的bam文件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ cnvnator -root sample.root -tree /your/path/of/bam</span><br><span class="line">$ cnvnator -root sample.root -his 100 -d /your/path/of/hg19</span><br><span class="line">$ cnvnator -root sample.root -stat 100</span><br><span class="line">$ cnvnator -root sample.root -partition 100</span><br><span class="line">$ cnvnator -root sample.root -call 100 &gt; sample.cnvnator</span><br><span class="line">$ awk &apos;&#123; print $2 &#125; END &#123; print &quot;exit&quot; &#125;&apos; sample.cnvnator | cnvnator -root sample.root -genotype 100 &gt; sample.gt</span><br><span class="line">$ /your/path/of/CNVnator/cnvnator2VCF.pl -prefix sample -reference hg19 sample.cnvnator /your/path/of/hg19 &gt; sample.vcf</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>上面就是常规步骤了，介绍几个点：</p>
+<ul>
+<li><p>首先是 -his 参数的值，也就是bin_size的值，这个可以根据CNVnator作者的建议，根据测序深度的不同进行调整：100X: 30；20-30X: 100；4-6X: 500；再低就1000</p>
+</li>
+<li><p>其次是 -d 参数，关于这个参数，官网有两种用法：</p>
+<ol>
+<li>如果使用 -d 那就后面接参考基因组所在目录，作者自己是在 hg19 下有各个不同染色体的fasta文件，虽然按照说明是只要目录下有参考基因组就行了。这里笔者一开始目录中只有合并后的hg19的文件，发现下面的步骤报错，后来就重新下载hg19文件，解压后没有合并，运行正常。</li>
+<li>如果使用 -fasta 参数就在后面跟参考基因组的压缩文件，笔者是把 hg19.fa 压缩成了 hg19.fa.gz ，但是后面还是报错了</li>
+</ol>
+</li>
+<li><p>第六句<code>awk</code>那一句可以不运行，主要是看genotype，不影响最后一步转换为vcf文件</p>
+</li>
+</ul>
+</li>
+<li><p>到这一步其实也就差不多了，那么下面是关于CNVs数据的一些简单处理方式和意见的记录，这一块笔者也没有仔细去研究，如果有需要可以单独交流。</p>
+</li>
+<li><p>关于CNV结果的注释，这里参考annovar注释：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ perl convert2annovar.pl -format vcf4old sample.vcf &gt; sample.avinput</span><br><span class="line">$ perl table_annovar.pl W001.avinput /your/path/of/annovar/humandb/ --buildver hg19 -remove -out sample -protocol refGene,cytoBand,omim201806,gwasCatalog,CCRS,phastConsElements100way,phastConsElements46way,phastConsElements46wayPlacental,phastConsElements46wayPrimates,tfbsConsSites,rmsk,dgvMerged,HIP,Constraint -operation g,r,r,r,r,r,r,r,r,r,r,r,r,r -nastring . --thread 12</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>其实对于 CNVs 的注释和筛选，所能使用的数据库并不像 SNVs 那么多，所幸的是CNVs的结果也没那么多。</p>
+</li>
+<li><p>上面注释所涉及的数据库大多数能在annovar中直接下载，除了omim201806、CCRS、HIP、Constraint。</p>
+<ul>
+<li><p>OMIM的数据可以在OMIM官网通过申请下载，这里不方便挂出来，不过笔者最近一次申请都过去几个月了，OMIM还是没有把链接发过来。</p>
+</li>
+<li><p>CCRS的数据可以在笔者之前的文章，关于注释的那一篇中下载并修改格式，但是用在CNVs中参考价值可能不大，可自行查阅。</p>
+</li>
+<li><p>HIP和Constraint的数据来源于DECIPHER，可以作为参考，下面记录一下如何下载并转换格式。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"># DECIPHER数据库提供了在线的可视化的检索方式，可以查看相关变异的很多信息，包括表型、致病性等，这些信息都是临床或科研单位上传的。其中DECIPHER可供下载的数据包括以下三种</span><br><span class="line"># Haploinsufficiency Predictions:</span><br><span class="line">#    Updated predictions of haploinsufficiency as described by Huang et al. (2010, PLoS Genetics). Available as a Bed file for download from the link above.</span><br><span class="line">$ wget https://decipher.sanger.ac.uk/files/downloads/HI_Predictions_Version3.bed.gz</span><br><span class="line"># Population Copy-Number Variation Frequencies</span><br><span class="line">#    Common copy-number variants and their frequencies, as used and displayed in DECIPHER.</span><br><span class="line">$ wget https://decipher.sanger.ac.uk/files/downloads/population_cnv.txt.gz</span><br><span class="line"># Development Disorder Genotype – Phenotype Database (DDG2P) </span><br><span class="line">#    a curated list of genes reported to be associated with developmental disorders, compiled by clinicians as part of the DDD study to facilitate clinical feedback of likely causal variants. Please note: This file is maintained by the European Bioinformatics Institute. Its contents may differ from DECIPHER due to different update cycles.</span><br><span class="line">$ wget http://www.ebi.ac.uk/gene2phenotype/downloads/DDG2P.csv.gz</span><br><span class="line"># 上面是下载了三个数据库，当然下面只用到了两个，还有一个频率数据库笔者也不知道怎么去注释和使用比较好</span><br><span class="line"># 上述三个数据库直接用gunzip去解压就行</span><br><span class="line"># pLI:</span><br><span class="line">	$ awk -F &quot;\t&quot; &apos;&#123;print 0&quot;\t&quot;$3&quot;\t&quot;$5&quot;\t&quot;$6&quot;\t&quot;$20&#125;&apos; Constraint.txt &gt; hg19_Constraint.txt</span><br><span class="line">	$ sed -i &apos;1d&apos; hg19_Constraint.txt</span><br><span class="line"># HIP:</span><br><span class="line">	$ sed -i &apos;1d&apos; HI_Predictions_Version3.bed </span><br><span class="line">	$ bedtools sort -i HI_Predictions_Version3.bed &gt; HIP.txt</span><br><span class="line">	$ awk -F &quot;\t&quot; &apos;&#123;print 0&quot;\t&quot;$1&quot;\t&quot;$2&quot;\t&quot;$3&quot;\t&quot;$4&#125;&apos; HIP.txt &gt; hg19_HIP.txt</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>最后记得把两个数据库放到 humandb 目录下。</p>
+</li>
+<li><p>DECIPHER有对这两个数值进行介绍</p>
+<ul>
+<li><p>HIP，参考<a href="https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1001154" target="_blank" rel="noopener">paper</a></p>
+<p><img src="/2019/09/22/WGS分析笔记（6）- call CNV 和一些其他/1.png" alt="1569157836561"></p>
+</li>
+<li><p>pLI，参考<a href="https://www.nature.com/articles/nature19057" target="_blank" rel="noopener">paper</a></p>
+<p><img src="/2019/09/22/WGS分析笔记（6）- call CNV 和一些其他/2.png" alt="1569157975971"></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>除此之外，对于CNVs的研究也可以考虑从trio样本出发。考虑思路和snv类似，就是从遗传模式考虑，比如患者父母正常的情况下，可以寻找de novo、AR类型的变异。还有就是可以考虑将CNV的数据结合SNV/INDEL一起分析，主要就是CNV可能与SNV/INDEL构成复合杂合等情况。当然这些都是一些思路。</p>
+<hr>
+<p>水平有限，要是存在什么错误请指出，可发送邮件至<a href="mailto:shiyuant@outlook.com" target="_blank" rel="noopener">shiyuant@outlook.com</a>！请大家多多批评指正，相互交流，共同成长，谢谢！！！</p>
+</li>
+</ul>
+</li>
+</ul>
 
       
     </div>
 
+    
+
+    
+    
+    
+
+    <div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+  
+</div>
+    <div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <p><span>本文标题:</span><a href="/2019/09/22/WGS分析笔记（6）- call CNV 和一些其他/">WGS分析笔记（6）- call CNV 和一些其他</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 TongShiyuan 的个人博客">TongShiyuan</a></p>
+  <p><span>发布时间:</span>2019年09月22日 - 19:09</p>
+  <p><span>最后更新:</span>2019年09月22日 - 21:09</p>
+  <p><span>原始链接:</span><a href="/2019/09/22/WGS分析笔记（6）- call CNV 和一些其他/" title="WGS分析笔记（6）- call CNV 和一些其他">http://tongshiyuan.github.io/2019/09/22/WGS分析笔记（6）- call CNV 和一些其他/</a>
+    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://tongshiyuan.github.io/2019/09/22/WGS分析笔记（6）- call CNV 和一些其他/" aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    $(".fa-clipboard").click(function(){
+      clipboard.on('success', function(){
+        swal({   
+          title: "",   
+          text: '复制成功',
+          icon: "success", 
+          showConfirmButton: true
+          });
+    });
+    });  
+</script>
+
+      
+    </div>
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/生信/" rel="tag"># 生信</a>
+          
+            <a href="/tags/WGS/" rel="tag"># WGS</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/26/python-numpy学习笔记/" rel="next" title="python: numpy学习笔记">
+                <i class="fa fa-chevron-left"></i> python: numpy学习笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+  </div>
 
 
           </div>
           
+
+  
+
+
 
         </div>
         
@@ -766,6 +1028,10 @@
 
 
   
+  <script src="/js/scrollspy.js?v=7.1.2"></script>
+<script src="/js/post-details.js?v=7.1.2"></script>
+
+
 
   
 
@@ -781,6 +1047,8 @@
 
   
 
+
+  
 
 
   
